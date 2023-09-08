@@ -27,8 +27,9 @@ nav {
   align-items: center;
   justify-content: center;
   background-color: var(--primamid);
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 6vh;
+  color: var(--white);
 }
 
 section {
@@ -167,26 +168,6 @@ section {
     width: 100%;
   }
 
-  /* .balanceOpen .balanceContainer {
-  top: 50%;
-
-} */
-
-  .income-outcome {
-    /* background-image: url(./images/Simple\ Shiny.svg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%; */
-    background-color: var(--background);
-    height: calc(100vh - 6vh - 3rem);
-    display: flex;
-    justify-content: flex-start;
-    padding: 2 2vw;
-  }
-
-  .income-outcome > div {
-    margin: 2vh 2vw;
-  }
-
   .eurosign {
     padding: 0 2rem;
   }
@@ -257,20 +238,18 @@ section {
   }
 }
 
-/* .balanceOpen .balanceContainer {
-  top: 50%;
-
-} */
-
 .income-outcome {
   /* background-image: url(./images/Simple\ Shiny.svg);
   background-repeat: no-repeat;
   background-size: 100% 100%; */
   background-color: var(--background);
-  height: calc(100vh - 6vh - 3rem);
+  height: calc(100vh - 6vh - 4rem);
   display: flex;
   justify-content: flex-start;
   padding: 2 2vw;
+  border-left: 1px solid var(--primalight);
+  border-right: 1px solid var(--primalight);
+  border-bottom: 1px solid var(--primalight);
 }
 
 .income-outcome > div {
@@ -312,7 +291,7 @@ section {
   border-radius: 50%;
   aspect-ratio: 1/1;
   margin: 1rem;
-  font-size: 1rem;
+  font-size: 2rem;
   transition: all 0.3s ease;
 }
 
