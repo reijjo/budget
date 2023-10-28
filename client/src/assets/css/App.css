@@ -1,0 +1,49 @@
+#landing,
+#try-it-out {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg);
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+
+.balance {
+  width: 80%;
+  height: 90vh;
+  border: 4px solid var(--primary);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.saldo,
+.money-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.saldo {
+  border: 1px solid var(--primarylight);
+  width: 100%;
+  height: 80%;
+  flex-direction: column;
+}
+
+.income-expenses {
+  display: flex;
+  flex-direction: row;
+}
+
+.money-buttons {
+  border: 1px solid var(--primarymid);
+  width: 100%;
+  height: 20%;
+  justify-content: space-around;
+}
