@@ -1,2 +1,0 @@
-# budget
-budget app
