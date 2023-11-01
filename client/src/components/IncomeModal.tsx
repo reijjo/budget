@@ -27,6 +27,8 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
     setIncomeValue(event.target.value);
   };
 
+  // RETURN
+
   return (
     <div className="modal">
       <div className="inner-modal">
@@ -37,6 +39,13 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
             type="text"
             onChange={handleInputChange}
           />
+          <div className="money-input-type">
+            {/* <h2>Select type</h2> */}
+            <button>Salary</button>
+            <button>Kela</button>
+            <button>Other</button>
+            <button>extra</button>
+          </div>
           <div className="money-input-buttons">
             <button type="submit">Add</button>
             <button onClick={() => handleCloseIncome(0)} type="button">

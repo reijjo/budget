@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 
+// import { IncomeType } from "../utils/types";
+
 import IncomeModal from "../components/IncomeModal";
 import ExpensesModal from "../components/ExpensesModal";
 
 const TryItOut = () => {
-  const [saldo, setSaldo] = useState<number>(0); // Current balande
+  const [saldo, setSaldo] = useState<number>(0); // Current balance
   const [income, setIncome] = useState<number>(0);
   const [expenses, setExpenses] = useState<number>(0);
   const [incomeModalOpen, setIncomeModalOpen] = useState(false);
   const [expensesModalOpen, setExpensesModalOpen] = useState(false);
+
+  // const [whatIncome, setWhatIncome] = useState<IncomeType | null>(null);
 
   // Change the current balance everytime the income or expenses change
 
@@ -45,6 +49,8 @@ const TryItOut = () => {
     }
   };
 
+  // RETURN
+
   return (
     <div id="try-it-out">
       {incomeModalOpen && (
@@ -63,9 +69,8 @@ const TryItOut = () => {
         <div className="saldo">
           <h2>Saldo {saldo} €</h2>
           <div className="income-expenses">
-            <h3>
-              +{income} € | -{expenses} €
-            </h3>
+            <h3 style={{ color: "var(--primarylight)" }}>+{income} €</h3>
+            <h3 style={{ color: "var(--secondary)" }}>-{expenses} €</h3>
           </div>
         </div>
         <div className="money-buttons">
