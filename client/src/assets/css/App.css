@@ -32,7 +32,7 @@
 .saldo {
   /* border: 1px solid var(--primarylight); */
   width: 100%;
-  height: 80%;
+  height: 75%;
   flex-direction: column;
 }
 
@@ -41,19 +41,69 @@
   flex-direction: column;
 }
 
-.money-buttons {
-  border-top: 2px solid var(--primarymid);
+.balance-stuff {
+  height: 25%;
   width: 100%;
-  height: 20%;
+  /* border: 1px solid var(--secondary2); */
+  border-top: 2px solid var(--primarymid);
+}
+
+.balance-button {
+  border-bottom: 2px solid var(--primarymid);
+  height: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.balance-button:hover {
+  transform: translateY(-2px);
+}
+
+.balance-button button {
+  height: 100%;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  background: none;
+  /* color: inherit; */
+}
+
+.balance-button button:hover {
+  cursor: pointer;
+}
+
+.saldo-button-center {
+  width: 70%;
+  color: var(--black);
+  font-weight: bolder;
+}
+
+.saldo-button-side {
+  width: 15%;
+  color: var(--text);
+}
+
+.money-buttons {
+  width: 100%;
+  height: 70%;
   justify-content: space-around;
 }
 
 .income-button,
 .expenses-button {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
   font-size: 1.5rem;
+}
+
+.income-button:hover,
+.expenses-button:hover {
+  cursor: pointer;
+  transform: translateY(-2px);
 }
 
 .income-button {
