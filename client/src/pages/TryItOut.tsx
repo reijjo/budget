@@ -9,6 +9,7 @@ import {
 
 import IncomeModal from "../components/IncomeModal";
 import ExpensesModal from "../components/ExpensesModal";
+import BalanceModal from "../components/BalanceModal";
 
 const TryItOut = () => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
@@ -33,6 +34,7 @@ const TryItOut = () => {
   });
   const [incomeModalOpen, setIncomeModalOpen] = useState(false);
   const [expensesModalOpen, setExpensesModalOpen] = useState(false);
+  const [balanceModalOpen, setBalanceModalOpen] = useState(false);
 
   // Change the current balance everytime the income or expenses change
 
@@ -40,7 +42,7 @@ const TryItOut = () => {
     setSaldo(parseFloat((income - expenses).toFixed(2)));
   }, [income, expenses]);
 
-  // Open the income / expenses modal
+  // Open the income / expenses / balance modal
 
   const handleOpenIncome = () => {
     console.log("lisaa massii");
@@ -50,6 +52,10 @@ const TryItOut = () => {
   const handleOpenExpenses = () => {
     console.log("lisaa menoja");
     setExpensesModalOpen(true);
+  };
+
+  const handleBalanceModal = () => {
+    setBalanceModalOpen(!balanceModalOpen);
   };
 
   // Closes the income / expenses modal and sets the new balance
@@ -80,7 +86,8 @@ const TryItOut = () => {
     }
   };
 
-  console.log("expenseValues", expenseValues);
+  // console.log("expenseValues", expenseValues);
+  console.log("balance modal", balanceModalOpen);
 
   // RETURN
 
@@ -99,52 +106,64 @@ const TryItOut = () => {
         />
       )}
       <div className="balance">
-        <div className="saldo">
-          <div>Salary {incomeValues.Salary.toFixed(2)}</div>
-          <div>Kela {incomeValues.Kela.toFixed(2)}</div>
-          <div>Other {incomeValues.Other.toFixed(2)}</div>
-          <div className="income-expenses">
-            <h3 style={{ color: "var(--primarylight)" }}>
-              +{income.toFixed(2)} €
-            </h3>
-            <h3 style={{ color: "var(--secondary)" }}>
-              -{expenses.toFixed(2)} €
-            </h3>
-
-            {/* How to display only the expenses with value > 0 */}
-
-            {expenses > 0 && (
-              <div className="expenses">
-                <h4>Expenses</h4>
-                {Object.entries(expenseValues).map(([expenseType, value]) => {
-                  if (value > 0) {
-                    return (
-                      <div key={expenseType}>
-                        <div>
-                          {expenseType} {value.toFixed(2)}
-                        </div>
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-              </div>
-            )}
+        {balanceModalOpen ? (
+          <div className={`balance-modal ${balanceModalOpen ? "open" : ""}`}>
+            <BalanceModal />
           </div>
-        </div>
+        ) : (
+          <div className="saldo">
+            <div>Salary {incomeValues.Salary.toFixed(2)}</div>
+            <div>Kela {incomeValues.Kela.toFixed(2)}</div>
+            <div>Other {incomeValues.Other.toFixed(2)}</div>
+            <div className="income-expenses">
+              <h3 style={{ color: "var(--primarylight)" }}>
+                +{income.toFixed(2)} €
+              </h3>
+              <h3 style={{ color: "var(--secondary)" }}>
+                -{expenses.toFixed(2)} €
+              </h3>
+
+              {/* How to display only the expenses with value > 0 */}
+
+              {expenses > 0 && (
+                <div className="expenses">
+                  <h4>Expenses</h4>
+                  {Object.entries(expenseValues).map(([expenseType, value]) => {
+                    if (value > 0) {
+                      return (
+                        <div key={expenseType}>
+                          <div>
+                            {expenseType} {value.toFixed(2)}
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="balance-stuff">
           <div className="balance-button" title="Click for more info!">
-            <button className="saldo-button-side">-</button>
+            <button className="saldo-button-side" onClick={handleBalanceModal}>
+              -
+            </button>
             <button
               className="saldo-button-center"
               style={{
                 backgroundColor:
                   saldo > 0 ? "var(--primarylight)" : "var(--secondary)",
               }}
+              onClick={handleBalanceModal}
             >
-              balance {saldo}€
+              balance {saldo.toFixed(2)}€
             </button>
-            <button className="saldo-button-side">-</button>
+            <button className="saldo-button-side" onClick={handleBalanceModal}>
+              -
+            </button>
           </div>
           <div className="money-buttons">
             <button

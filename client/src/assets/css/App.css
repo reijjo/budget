@@ -29,12 +29,67 @@
   align-items: center;
 }
 
-.saldo {
+.saldo,
+.balance-modal {
   /* border: 1px solid var(--primarylight); */
   width: 100%;
   height: 75%;
   flex-direction: column;
 }
+
+.balance-modal.open {
+  background-color: var(--black);
+  transition: background-color 2s ease;
+}
+
+/* BalanceModal */
+
+.inside-balancemodal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inside-income,
+.inside-expenses {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.inside-income h3,
+.inside-expenses h3 {
+  margin: 6px;
+  text-align: center;
+  color: var(--text);
+}
+
+.inside-income {
+  color: var(--primarylight);
+}
+
+.inside-expenses {
+  color: var(--secondary);
+}
+
+.inside-grid {
+  display: grid;
+  width: 100%;
+  /* height: 100%; */
+  grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+  overflow: auto;
+}
+
+.inside-grid > div {
+  border: 1px solid var(--primarylight);
+  padding: 0.5rem;
+}
+
+/* END BalanceModal */
 
 .income-expenses {
   display: flex;
@@ -45,10 +100,10 @@
   height: 25%;
   width: 100%;
   /* border: 1px solid var(--secondary2); */
-  border-top: 2px solid var(--primarymid);
 }
 
 .balance-button {
+  border-top: 2px solid var(--primarymid);
   border-bottom: 2px solid var(--primarymid);
   height: 30%;
   width: 100%;
@@ -56,6 +111,7 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
+  transition: transform 0.2s ease;
 }
 
 .balance-button:hover {
@@ -98,6 +154,7 @@
   width: 80px;
   border-radius: 50%;
   font-size: 1.5rem;
+  transition: transform 0.2s ease-in;
 }
 
 .income-button:hover,
@@ -118,6 +175,8 @@
   /* color: var(--secondary2); */
 }
 
+/* Income / Expenses Modal */
+
 .money-input {
   width: 50%;
   max-width: 300px;
@@ -126,34 +185,80 @@
 }
 
 .money-input-type {
-  border: 1px solid var(--secondary);
+  /* border: 1px solid var(--secondary); */
+  margin-top: 4px;
   width: 50%;
   max-width: 300px;
   height: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  gap: 6px;
 }
 
 .money-input-type > button {
-  width: 30%;
+  width: 100%;
   height: 50px;
-  margin-bottom: 8px;
+  background-color: inherit;
+  border: none;
+  color: var(--text);
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.modal-income-button {
+  box-shadow: -1px 1px var(--primarymid);
+}
+
+.modal-expense-button {
+  box-shadow: -1px 1px var(--secondary2);
 }
 
 .money-input-buttons {
-  border: 1px solid var(--secondary2);
+  /* border: 1px solid var(--secondary2); */
   width: 50%;
   max-width: 300px;
   height: 50px;
-  margin-top: 8px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
 .money-input-buttons > button {
-  height: 80%;
+  height: 100%;
   width: 45%;
+  /* border: none; */
+  /* color: var(--text); */
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.money-input-button-income {
+  border: 1px solid var(--primarymid);
+  background-color: var(--primarylight);
+  color: var(--bg);
+}
+
+.money-input-button-income:hover {
+  box-shadow: 4px 4px 8px var(--primarymid);
+}
+.money-input-button-expenses {
+  border: 1px solid var(--secondary2);
+  background-color: var(--secondary);
+  color: var(--bg);
+}
+
+.money-input-button-expenses:hover {
+  box-shadow: 4px 4px 8px var(--secondary2);
+}
+
+.money-input-button-cancel {
+  border: 1px solid var(--secondary2);
+  background-color: inherit;
+  color: var(--text);
 }

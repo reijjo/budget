@@ -42,7 +42,9 @@ const ExpensesModal = ({
     <div className="modal">
       <div className="inner-modal">
         <form id="expenses-form" onSubmit={handleExpenses}>
-          <h1>Add expense</h1>
+          <h1 style={{ margin: "4px", color: "var(--secondary)" }}>
+            Add expense
+          </h1>
           <input
             className="money-input"
             type="text"
@@ -51,12 +53,12 @@ const ExpensesModal = ({
           />
           <div className="money-input-type">
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
-                  selectedButton === ExpenseType.Rent
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                  selectedButton === ExpenseType.Rent ? "var(--secondary)" : "",
+                color: selectedButton === ExpenseType.Rent ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Rent);
@@ -65,12 +67,14 @@ const ExpensesModal = ({
               Rent
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === ExpenseType.Bills
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    ? "var(--secondary)"
+                    : "",
+                color: selectedButton === ExpenseType.Bills ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Bills);
@@ -79,12 +83,15 @@ const ExpensesModal = ({
               Bills
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === ExpenseType.Shopping
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    ? "var(--secondary)"
+                    : "",
+                color:
+                  selectedButton === ExpenseType.Shopping ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Shopping);
@@ -93,12 +100,15 @@ const ExpensesModal = ({
               Shopping
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === ExpenseType.Savings
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    ? "var(--secondary)"
+                    : "",
+                color:
+                  selectedButton === ExpenseType.Savings ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Savings);
@@ -107,12 +117,15 @@ const ExpensesModal = ({
               Savings
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === ExpenseType.Restaurant
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    ? "var(--secondary)"
+                    : "",
+                color:
+                  selectedButton === ExpenseType.Restaurant ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Restaurant);
@@ -121,12 +134,12 @@ const ExpensesModal = ({
               Restaurant
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
-                  selectedButton === ExpenseType.Pets
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                  selectedButton === ExpenseType.Pets ? "var(--secondary)" : "",
+                color: selectedButton === ExpenseType.Pets ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Pets);
@@ -135,12 +148,15 @@ const ExpensesModal = ({
               Pets
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === ExpenseType.Transport
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    ? "var(--secondary)"
+                    : "",
+                color:
+                  selectedButton === ExpenseType.Transport ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Transport);
@@ -149,12 +165,12 @@ const ExpensesModal = ({
               Transport
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
-                  selectedButton === ExpenseType.Food
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                  selectedButton === ExpenseType.Food ? "var(--secondary" : "",
+                color: selectedButton === ExpenseType.Food ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Food);
@@ -163,12 +179,14 @@ const ExpensesModal = ({
               Food
             </button>
             <button
+              className="modal-expense-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === ExpenseType.Other
-                    ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    ? "var(--secondary)"
+                    : "",
+                color: selectedButton === ExpenseType.Other ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(ExpenseType.Other);
@@ -178,8 +196,11 @@ const ExpensesModal = ({
             </button>
           </div>
           <div className="money-input-buttons">
-            <button type="submit">Add</button>
+            <button type="submit" className="money-input-button-expenses">
+              Add
+            </button>
             <button
+              className="money-input-button-cancel"
               onClick={() => handleCloseExpenses(0, ExpenseType.Bills)}
               type="button"
             >

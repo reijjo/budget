@@ -40,7 +40,9 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
     <div className="modal">
       <div className="inner-modal">
         <form id="income-form" onSubmit={handleIncome}>
-          <h1>Add income</h1>
+          <h1 style={{ margin: "4px", color: "var(--primarylight)" }}>
+            Add income
+          </h1>
           <input
             className="money-input"
             type="text"
@@ -50,12 +52,14 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
           <div className="money-input-type">
             {/* <h2>Select type</h2> */}
             <button
+              className="modal-income-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === IncomeType.Salary
                     ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    : "",
+                color: selectedButton === IncomeType.Salary ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(IncomeType.Salary);
@@ -64,12 +68,14 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
               Salary
             </button>
             <button
+              className="modal-income-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === IncomeType.Kela
                     ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    : "",
+                color: selectedButton === IncomeType.Kela ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(IncomeType.Kela);
@@ -78,12 +84,14 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
               Kela
             </button>
             <button
+              className="modal-income-button"
               type="button"
               style={{
                 backgroundColor:
                   selectedButton === IncomeType.Other
                     ? "var(--primarylight)"
-                    : "var(--secondary)",
+                    : "",
+                color: selectedButton === IncomeType.Other ? "var(--bg)" : "",
               }}
               onClick={() => {
                 setSelectedButton(IncomeType.Other);
@@ -93,8 +101,11 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
             </button>
           </div>
           <div className="money-input-buttons">
-            <button type="submit">Add</button>
+            <button type="submit" className="money-input-button-income">
+              Add
+            </button>
             <button
+              className="money-input-button-cancel"
               onClick={() => handleCloseIncome(0, IncomeType.Salary)}
               type="button"
             >
