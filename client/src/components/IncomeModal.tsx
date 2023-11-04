@@ -83,6 +83,24 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
             >
               Kela
             </button>
+
+            <button
+              className="modal-income-button"
+              type="button"
+              style={{
+                backgroundColor:
+                  selectedButton === IncomeType.Savings
+                    ? "var(--primarylight)"
+                    : "",
+                color: selectedButton === IncomeType.Savings ? "var(--bg)" : "",
+              }}
+              onClick={() => {
+                setSelectedButton(IncomeType.Savings);
+              }}
+            >
+              Savings
+            </button>
+
             <button
               className="modal-income-button"
               type="button"

@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Colors,
+  // ChartConfiguration,
+} from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 
 import {
   ExpenseType,
@@ -39,29 +46,58 @@ const TryItOut = () => {
   const [incomeModalOpen, setIncomeModalOpen] = useState(false);
   const [expensesModalOpen, setExpensesModalOpen] = useState(false);
   const [balanceModalOpen, setBalanceModalOpen] = useState(false);
+  const [expensePercent, setExpensePercent] = useState<number[]>([]);
+  // const [checkExpenses, setCheckExpenses] = useState(true)
 
   // Chart.js
 
   const donitsidata = {
-    labels: ["red", "blue", "yellow"],
+    labels: Object.keys(expenseValues),
     datasets: [
       {
-        label: "% of income",
-        data: [12, 19, 3],
+        label: "% of expenses",
+        data: expensePercent,
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
+          "rgba(255, 99, 132, 0.5)",
+          "rgba(54, 162, 235, 0.5)",
+          "rgba(255, 206, 86, 0.5)",
+          "rgba(75, 192, 192, 0.5)",
+          "rgba(153, 102, 255, 0.5)",
+          "rgba(255, 159, 64, 0.5)",
+          "rgba(128, 0, 128, 0.5)",
+          "rgba(0, 128, 0, 0.5)",
+          "rgba(0, 0, 128, 0.5)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
           "rgba(54, 162, 235, 1)",
           "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+          "rgba(128, 0, 128, 1)",
+          "rgba(0, 128, 0, 1)",
+          "rgba(0, 0, 128, 1)",
         ],
         borderWidth: 1,
       },
     ],
   };
+
+  // Gets the percentages of every expense
+
+  useEffect(() => {
+    const totalExpense = Object.values(expenseValues).reduce(
+      (total, value) => total + value,
+      0
+    );
+
+    const percentages = Object.values(expenseValues).map(
+      (value) => (value / totalExpense) * 100
+    );
+
+    setExpensePercent(percentages);
+  }, [expenseValues]);
 
   // Change the current balance everytime the income or expenses change
 
@@ -113,8 +149,7 @@ const TryItOut = () => {
     }
   };
 
-  // console.log("expenseValues", expenseValues);
-  console.log("balance modal", balanceModalOpen);
+  console.log("expenseValues", incomeValues);
 
   // RETURN
 
@@ -143,7 +178,8 @@ const TryItOut = () => {
               <div className="donitsi">
                 <Doughnut
                   data={donitsidata}
-                  options={{ maintainAspectRatio: true, responsive: true }}
+                  // options={donitsioptions}
+                  // options={{ maintainAspectRatio: true, responsive: true }}
                 />
 
                 <div className="donitsi-label">
