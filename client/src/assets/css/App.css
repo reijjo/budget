@@ -72,16 +72,35 @@
   margin-top: 24px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: calc(100% - 24px);
+  width: calc(5 * 8.33%);
 }
 
-.login-inputs > div {
-  font-size: 0.9rem;
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
 }
 
-.logo-extratext {
-  margin-top: auto;
-  margin-bottom: 16px;
+.label-input {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.label-input label {
+  margin-bottom: 4px;
+}
+
+.label-input input {
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.helper-text {
+  margin-top: 8px;
   font-size: 0.9rem;
 }
 
