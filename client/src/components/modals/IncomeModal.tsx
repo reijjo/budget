@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { IncomeType } from "../utils/types";
+import { IncomeType } from "../../utils/types";
 
 type IncomeModalProps = {
   handleCloseIncome: (newBalance: number, incomeType: IncomeType) => void;
@@ -119,11 +119,14 @@ const IncomeModal = ({ handleCloseIncome, setIncome }: IncomeModalProps) => {
             </button>
           </div>
           <div className="money-input-buttons">
-            <button type="submit" className="money-input-button-income">
+            <button
+              type="submit"
+              className="my-btn filled-btn money-input-button-income"
+            >
               Add
             </button>
             <button
-              className="money-input-button-cancel"
+              className="my-btn outline-btn"
               onClick={() => handleCloseIncome(0, IncomeType.Salary)}
               type="button"
             >

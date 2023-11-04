@@ -42,6 +42,18 @@ h6 {
   font-family: "Poppins", sans-serif;
 }
 
+/* Navbar & Footer */
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  margin-top: 40px;
+}
+
+/* END Navbar & Footer */
+
 a {
   color: var(--primarylight);
   text-decoration: none;

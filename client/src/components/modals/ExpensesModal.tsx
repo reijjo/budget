@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { ExpenseType } from "../utils/types";
+import { ExpenseType } from "../../utils/types";
 
 type ExpensesModalProps = {
   handleCloseExpenses: (newBalance: number, expenseType: ExpenseType) => void;
@@ -196,11 +196,14 @@ const ExpensesModal = ({
             </button>
           </div>
           <div className="money-input-buttons">
-            <button type="submit" className="money-input-button-expenses">
+            <button
+              type="submit"
+              className="my-btn filled-btn money-input-button-expenses"
+            >
               Add
             </button>
             <button
-              className="money-input-button-cancel"
+              className="my-btn outline-btn"
               onClick={() => handleCloseExpenses(0, ExpenseType.Bills)}
               type="button"
             >

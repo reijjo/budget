@@ -18,9 +18,9 @@ import {
   IncomeValues,
 } from "../utils/types";
 
-import IncomeModal from "../components/IncomeModal";
-import ExpensesModal from "../components/ExpensesModal";
-import BalanceModal from "../components/BalanceModal";
+import IncomeModal from "../components/modals/IncomeModal";
+import ExpensesModal from "../components/modals/ExpensesModal";
+import BalanceModal from "../components/modals/BalanceModal";
 
 const TryItOut = () => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
@@ -191,25 +191,6 @@ const TryItOut = () => {
                   </h3>
                 </div>
               </div>
-              {/* How to display only the expenses with value > 0 */}
-
-              {/* {expenses > 0 && (
-                <div className="expenses">
-                  <h4>Expenses</h4>
-                  {Object.entries(expenseValues).map(([expenseType, value]) => {
-                    if (value > 0) {
-                      return (
-                        <div key={expenseType}>
-                          <div>
-                            {expenseType} {value.toFixed(2)}
-                          </div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
-              )} */}
             </div>
           </div>
         )}
@@ -223,7 +204,7 @@ const TryItOut = () => {
               className="saldo-button-center"
               style={{
                 backgroundColor:
-                  saldo > 0 ? "var(--primarylight)" : "var(--secondary)",
+                  saldo < 0 ? "var(--secondary)" : "var(--primarylight)",
               }}
               onClick={handleBalanceModal}
             >

@@ -9,6 +9,7 @@
   height: 100%;
   width: calc(100% - 48px);
   margin: 0 24px;
+  position: relative;
 }
 
 .landing-top-button {
@@ -371,32 +372,9 @@
 }
 
 .money-input-button-income {
-  border: 1px solid var(--primarymid);
-  background-color: var(--primarylight);
-  color: var(--bg);
   margin-right: 16px;
 }
 
-.money-input-button-income:hover {
-  box-shadow: 4px 4px 8px var(--primarymid);
-}
 .money-input-button-expenses {
-  border: 1px solid var(--secondary2);
-  background-color: var(--secondary);
-  color: var(--bg);
   margin-right: 16px;
-}
-
-.money-input-button-expenses:hover {
-  box-shadow: 4px 4px 8px var(--secondary2);
-}
-
-.money-input-button-cancel {
-  border: 1px solid var(--secondary2);
-  background-color: inherit;
-  color: var(--text);
-}
-
-.money-input-button-cancel:hover {
-  box-shadow: 4px 4px 8px var(--secondary2);
 }
