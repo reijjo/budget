@@ -11,6 +11,13 @@
   margin: 0 24px;
 }
 
+.landing-top-button {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 12px 24px;
+}
+
 /* Landing page */
 
 .landing-logo {

@@ -1,20 +1,28 @@
-const SignUp = () => {
+import { SetStateAction } from "react";
+
+interface Props {
+  // onClick?: () => void | null;
+  status: boolean;
+  setSignIn: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const SignUp = ({ status, setSignIn }: Props) => {
   return (
     <div className="logo-inputs">
       <p>Register</p>
       <form id="form-register">
         <div className="login-inputs">
           <div className="label-input">
-            <label htmlFor="email">Email</label>
-            <input type="text" name="email" />
+            <label htmlFor="reg-input-email">Email</label>
+            <input type="text" id="reg-input-email" />
           </div>
           <div className="label-input">
-            <label htmlFor="passwd">Password</label>
-            <input type="text" name="passwd" />
+            <label htmlFor="reg-input-passwd">Password</label>
+            <input type="text" id="reg-input-passwd" />
           </div>
           <div className="label-input">
-            <label htmlFor="passwd2">Confirm password</label>
-            <input type="text" name="passwd2" />
+            <label htmlFor="reg-input-passwd2">Confirm password</label>
+            <input type="text" id="reg-input-passwd2" />
           </div>
 
           <button
@@ -28,7 +36,7 @@ const SignUp = () => {
             Already got an account? Sign in{" "}
             <button
               className="my-btn text-btn"
-              // onClick={() => setSignIn(!signIn)}
+              onClick={() => setSignIn(!status)}
             >
               here!
             </button>

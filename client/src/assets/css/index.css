@@ -115,7 +115,7 @@ form {
 }
 
 .outline-btn:hover {
-  box-shadow: 2px 2px 10px var(--primarymid);
+  box-shadow: 2px 2px 10px var(--secondary2);
   transform: translatey(-2px);
 }
 

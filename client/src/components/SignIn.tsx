@@ -1,18 +1,25 @@
+import { SetStateAction } from "react";
 import { Link } from "react-router-dom";
 
-const SignIn = () => {
+interface Props {
+  // onClick?: () => void | null;
+  status: boolean;
+  setSignIn: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const SignIn = ({ status, setSignIn }: Props) => {
   return (
     <div className="logo-inputs">
       <p>Sign in</p>
       <form id="form-login">
         <div className="login-inputs">
           <div className="label-input">
-            <label htmlFor="email">Email</label>
-            <input type="text" name="email" />
+            <label htmlFor="login-input-email">Email</label>
+            <input type="text" id="login-input-email" />
           </div>
           <div className="label-input">
-            <label htmlFor="passwd">Password</label>
-            <input type="text" name="passwd" />
+            <label htmlFor="login-input-passwd">Password</label>
+            <input type="text" id="login-input-passwd" />
           </div>
           <div className="helper-text">
             <button
@@ -27,7 +34,12 @@ const SignIn = () => {
           </button>
           <div className="helper-text">
             No account? Register{" "}
-            <button className="my-btn text-btn">here!</button>
+            <button
+              className="my-btn text-btn"
+              onClick={() => setSignIn(!status)}
+            >
+              here!
+            </button>
           </div>
           <div className="helper-text" style={{ margin: "auto auto 8px auto" }}>
             Or click{" "}
