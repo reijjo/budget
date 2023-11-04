@@ -4,7 +4,18 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <div id="landing">
-      <Link to="#" style={{ position: "fixed", top: "0", right: "0" }}>
+      <Link
+        to="#"
+        style={{
+          position: "fixed",
+          top: "0",
+          right: "0",
+          margin: "12px 24px",
+          border: "1px solid var(--primarylight)",
+          borderRadius: "4px",
+          padding: "8px 16px",
+        }}
+      >
         Sign up
       </Link>
       <div className="landing-logo">
