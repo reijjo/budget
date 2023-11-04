@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 import {
   ExpenseType,
@@ -35,6 +39,29 @@ const TryItOut = () => {
   const [incomeModalOpen, setIncomeModalOpen] = useState(false);
   const [expensesModalOpen, setExpensesModalOpen] = useState(false);
   const [balanceModalOpen, setBalanceModalOpen] = useState(false);
+
+  // Chart.js
+
+  const donitsidata = {
+    labels: ["red", "blue", "yellow"],
+    datasets: [
+      {
+        label: "% of income",
+        data: [12, 19, 3],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   // Change the current balance everytime the income or expenses change
 
@@ -112,20 +139,25 @@ const TryItOut = () => {
           </div>
         ) : (
           <div className="saldo">
-            <div>Salary {incomeValues.Salary.toFixed(2)}</div>
-            <div>Kela {incomeValues.Kela.toFixed(2)}</div>
-            <div>Other {incomeValues.Other.toFixed(2)}</div>
             <div className="income-expenses">
-              <h3 style={{ color: "var(--primarylight)" }}>
-                +{income.toFixed(2)} €
-              </h3>
-              <h3 style={{ color: "var(--secondary)" }}>
-                -{expenses.toFixed(2)} €
-              </h3>
+              <div className="donitsi">
+                <Doughnut
+                  data={donitsidata}
+                  options={{ maintainAspectRatio: true, responsive: true }}
+                />
 
+                <div className="donitsi-label">
+                  <h3 style={{ color: "var(--primarylight)" }}>
+                    +{income.toFixed(2)} €
+                  </h3>
+                  <h3 style={{ color: "var(--secondary)" }}>
+                    -{expenses.toFixed(2)} €
+                  </h3>
+                </div>
+              </div>
               {/* How to display only the expenses with value > 0 */}
 
-              {expenses > 0 && (
+              {/* {expenses > 0 && (
                 <div className="expenses">
                   <h4>Expenses</h4>
                   {Object.entries(expenseValues).map(([expenseType, value]) => {
@@ -141,7 +173,7 @@ const TryItOut = () => {
                     return null;
                   })}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         )}
