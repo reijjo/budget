@@ -208,7 +208,7 @@ const TryItOut = () => {
               }}
               onClick={handleBalanceModal}
             >
-              balance {saldo.toFixed(2)}€
+              <span>balance</span> {saldo.toFixed(2)}€
             </button>
             <button className="saldo-button-side" onClick={handleBalanceModal}>
               -
