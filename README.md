@@ -26,5 +26,6 @@
 ## TODO
 * Responsive
 * Backend
+* Redux for not registered users (maybe)
 
 
