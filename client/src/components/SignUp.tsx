@@ -32,7 +32,7 @@ const SignUp = ({ status, setSignIn }: Props) => {
           >
             Sign in
           </button>
-          <div className="helper-text">
+          <div className="helper-text" style={{ textAlign: "center" }}>
             Already got an account? Sign in{" "}
             <button
               className="my-btn text-btn"

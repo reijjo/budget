@@ -32,7 +32,7 @@ const SignIn = ({ status, setSignIn }: Props) => {
           <button type="submit" className="my-btn filled-btn">
             Sign in
           </button>
-          <div className="helper-text">
+          <div className="helper-text" style={{ textAlign: "center" }}>
             No account? Register{" "}
             <button
               className="my-btn text-btn"
