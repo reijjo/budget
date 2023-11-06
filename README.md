@@ -26,5 +26,8 @@
 ## TODO
 
 - Change chart type @media (max-width: 600)
+- email confirmation
+- forgot password
+
 - Backend
 - Redux for not registered users (maybe)

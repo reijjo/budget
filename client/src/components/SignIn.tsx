@@ -13,10 +13,15 @@ const SignIn = ({ status, setSignIn }: Props) => {
       <p>Sign in</p>
       <form id="form-login">
         <div className="login-inputs">
+          {/* Email input */}
+
           <div className="label-input">
             <label htmlFor="login-input-email">Email</label>
             <input type="text" id="login-input-email" />
           </div>
+
+          {/* Password input */}
+
           <div className="label-input">
             <label htmlFor="login-input-passwd">Password</label>
             <input type="text" id="login-input-passwd" />
@@ -32,24 +37,34 @@ const SignIn = ({ status, setSignIn }: Props) => {
           <button type="submit" className="my-btn filled-btn">
             Sign in
           </button>
-          <div className="helper-text" style={{ textAlign: "center" }}>
-            No account? Register{" "}
-            <button
-              className="my-btn text-btn"
-              onClick={() => setSignIn(!status)}
-            >
-              here!
-            </button>
-          </div>
-          <div className="helper-text" style={{ margin: "auto auto 8px auto" }}>
-            Or click{" "}
-            <button className="my-btn text-btn">
-              <Link to="/test">here</Link>
-            </button>{" "}
-            to try THE BAG.
-          </div>
         </div>
       </form>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          flexDirection: "column",
+          height: "100%",
+        }}
+      >
+        <div className="helper-text" style={{ textAlign: "center" }}>
+          No account? Register{" "}
+          <button
+            className="my-btn text-btn"
+            onClick={() => setSignIn(!status)}
+          >
+            here!
+          </button>
+        </div>
+        <div className="helper-text" style={{ margin: "auto auto 8px auto" }}>
+          Or click{" "}
+          <button className="my-btn text-btn">
+            <Link to="/test">here</Link>
+          </button>{" "}
+          to try THE BAG.
+        </div>
+      </div>
     </div>
   );
 };

@@ -112,6 +112,11 @@
   font-size: 0.9rem;
 }
 
+#form-register,
+#form-login {
+  height: max-content;
+}
+
 /* Try It Out page */
 
 .balance {

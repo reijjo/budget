@@ -229,3 +229,23 @@ form {
   justify-content: center;
   align-items: center;
 }
+
+/* InfoMessage */
+
+.info-success,
+.info-warning,
+.info-error {
+  font-size: 1rem;
+}
+
+.info-success {
+  color: var(--success);
+}
+
+.info-warning {
+  color: var(--warn);
+}
+
+.info-error {
+  color: var(--error);
+}
