@@ -47,3 +47,9 @@ export type InfoMsg = {
   style?: string;
   message?: string | null;
 };
+
+export type InputFocus = {
+  email: boolean;
+  passwd: boolean;
+  passwd2: boolean;
+};

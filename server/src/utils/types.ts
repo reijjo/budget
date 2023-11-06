@@ -8,3 +8,5 @@ export type InfoMsg = {
   style?: string;
   message?: string | null;
 };
+
+export type InputFocus = {};
