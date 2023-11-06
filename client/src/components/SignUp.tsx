@@ -35,8 +35,9 @@ const SignUp = ({ status, setSignIn }: Props) => {
 
     try {
       const regUser = await userAPI.createUser(newUser);
-      setInfomessage({ message: regUser.message, style: "info-success" });
+      setInfomessage({ message: regUser.message, style: regUser.style });
     } catch (error: unknown) {
+      console.log("error");
       if (isAxiosError(error)) {
         setInfomessage({
           message: error.response?.data.message,
@@ -67,6 +68,7 @@ const SignUp = ({ status, setSignIn }: Props) => {
               value={newUser.email}
               required
               placeholder="Email..."
+              autoComplete="off"
               onChange={handleInput}
             />
           </div>
