@@ -37,10 +37,18 @@ export type ExpenseValues = {
   [key: string]: number;
 };
 
-export type User = {
+export type LoginCredentials = {
   email: string;
   passwd: string;
+};
+
+export type RegisterInfo = LoginCredentials & {
   passwd2: string;
+};
+
+export type Logged = {
+  token: string;
+  email: string;
 };
 
 export type InfoMsg = {

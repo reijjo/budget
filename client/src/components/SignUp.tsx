@@ -5,8 +5,8 @@ import {
   ChangeEvent,
   Dispatch,
 } from "react";
-import { User, InputFocus, InfoMsg, FormErrors } from "../utils/types";
-import userAPI from "../../api/users-api";
+import { RegisterInfo, InputFocus, InfoMsg, FormErrors } from "../utils/types";
+import userAPI from "../api/users-api";
 import InfoMessage from "./common/InfoMessage";
 import { isAxiosError } from "axios";
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const SignUp = ({ status, setSignIn }: Props) => {
-  const [newUser, setNewUser] = useState<User>({
+  const [newUser, setNewUser] = useState<RegisterInfo>({
     email: "",
     passwd: "",
     passwd2: "",

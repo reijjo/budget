@@ -4,12 +4,15 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import userAPI from "../api/users-api";
+import userAPI from "./api/users-api";
 
 import Landing from "./pages/Landing";
 import TryItOut from "./pages/TryItOut";
+import Budget from "./pages/Budget";
 import Navbar from "./components/common/Navbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Logged } from "./utils/types";
+// import { LoginCredentials } from "./utils/types";
 
 const MaybeNavbar = () => {
   const location = useLocation();
@@ -19,6 +22,19 @@ const MaybeNavbar = () => {
 };
 
 const App = () => {
+  const [user, setUser] = useState<Logged | null>(null);
+
+  // Get logged user
+
+  useEffect(() => {
+    const logged = window.localStorage.getItem("budgetUser");
+    if (logged) {
+      setUser(JSON.parse(logged));
+    }
+  }, [setUser]);
+
+  // Get all users just for fun
+
   useEffect(() => {
     const getAllUsers = async () => {
       const users = await userAPI.allUsers();
@@ -27,12 +43,17 @@ const App = () => {
     getAllUsers();
   }, []);
 
+  console.log("USER", user);
+
+  // Return
+
   return (
     <Router>
       <MaybeNavbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing setUser={setUser} />} />
         <Route path="/test" element={<TryItOut />} />
+        <Route path="budget" element={<Budget user={user} />} />
       </Routes>
     </Router>
   );
