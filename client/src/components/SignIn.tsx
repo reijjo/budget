@@ -17,19 +17,24 @@ const SignIn = ({ status, setSignIn }: Props) => {
 
           <div className="label-input">
             <label htmlFor="login-input-email">Email</label>
-            <input type="text" id="login-input-email" />
+            <input type="text" id="login-input-email" placeholder="Email..." />
           </div>
 
           {/* Password input */}
 
           <div className="label-input">
             <label htmlFor="login-input-passwd">Password</label>
-            <input type="text" id="login-input-passwd" />
+            <input
+              type="text"
+              id="login-input-passwd"
+              placeholder="Password..."
+            />
           </div>
           <div className="helper-text">
             <button
               className="my-btn text-btn"
               style={{ marginBottom: "16px", fontSize: "0.9rem" }}
+              onClick={() => alert("not working yet")}
             >
               Forgot password?
             </button>

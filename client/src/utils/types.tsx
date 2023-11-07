@@ -53,3 +53,19 @@ export type InputFocus = {
   passwd: boolean;
   passwd2: boolean;
 };
+
+export type FormErrors = {
+  email: {
+    len: string | null;
+    valid: string | null;
+  };
+  passwd: {
+    len: string | null;
+    special: string | null;
+    capital: string | null;
+    num: string | null;
+  };
+  passwd2: {
+    match: string | null;
+  };
+};

@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(8 * 8.33%);
+  width: calc(10 * 8.33%);
   height: 90%;
   border: 1px solid var(--primarylight);
   border-radius: 4px;
@@ -115,6 +115,21 @@
 #form-register,
 #form-login {
   height: max-content;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  margin-left: 24px;
+  width: 100%;
+}
+
+#form-register li {
+  font-size: 0.8rem;
+  color: var(--secondary);
 }
 
 /* Try It Out page */

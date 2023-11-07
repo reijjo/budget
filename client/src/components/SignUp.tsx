@@ -5,7 +5,7 @@ import {
   ChangeEvent,
   Dispatch,
 } from "react";
-import { User, InputFocus, InfoMsg } from "../utils/types";
+import { User, InputFocus, InfoMsg, FormErrors } from "../utils/types";
 import userAPI from "../../api/users-api";
 import InfoMessage from "./common/InfoMessage";
 import { isAxiosError } from "axios";
@@ -28,6 +28,22 @@ const SignUp = ({ status, setSignIn }: Props) => {
     passwd2: false,
   });
 
+  const [notValid, setNotValid] = useState<FormErrors>({
+    email: {
+      len: null,
+      valid: null,
+    },
+    passwd: {
+      len: null,
+      special: null,
+      capital: null,
+      num: null,
+    },
+    passwd2: {
+      match: null,
+    },
+  });
+
   const [infoMessage, setInfoMessage] = useState<InfoMsg>({
     style: "",
     message: "",
@@ -42,6 +58,52 @@ const SignUp = ({ status, setSignIn }: Props) => {
       ...prevData,
       [name]: value,
     }));
+
+    // Checks if input is valid
+
+    if (name === "email") {
+      const emailRegex = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+      const emailLenMsg =
+        value.length > 60 ? "Max 60 characters on email." : null;
+      const emailValidMsg = !emailRegex.test(value)
+        ? "That is not a legit email."
+        : null;
+
+      setNotValid((prevErrors) => ({
+        ...prevErrors,
+        email: { len: emailLenMsg, valid: emailValidMsg },
+      }));
+    } else if (name === "passwd") {
+      const pwLenMsg =
+        value.length < 8 || value.length > 30 ? "8-30 characters." : null;
+      const pwNumMsg = !/\d/.test(value) ? "At least one number." : null;
+      const pwCapitalMsg = !/[A-Z]/.test(value)
+        ? "At least one Uppercase letter."
+        : null;
+      const pwSpecialMsg = !/[!._\-@#*$]/.test(value)
+        ? "At least one special character !._-@#*$"
+        : null;
+
+      setNotValid((prevErrors) => ({
+        ...prevErrors,
+        passwd: {
+          len: pwLenMsg,
+          num: pwNumMsg,
+          capital: pwCapitalMsg,
+          special: pwSpecialMsg,
+        },
+      }));
+    } else if (name === "passwd2") {
+      const pw2Msg =
+        value !== newUser.passwd ? "Passwords doesn't match." : null;
+
+      setNotValid((prevErrors) => ({
+        ...prevErrors,
+        passwd2: {
+          match: pw2Msg,
+        },
+      }));
+    }
   };
 
   // Handle input focus / blur
@@ -114,6 +176,12 @@ const SignUp = ({ status, setSignIn }: Props) => {
               onBlur={handleBlur}
             />
           </div>
+          {inputFocus.email && (notValid.email.len || notValid.email.valid) && (
+            <ul>
+              {notValid.email.len && <li>{notValid.email.len}</li>}
+              {notValid.email.valid && <li>{notValid.email.valid}</li>}
+            </ul>
+          )}
 
           {/* Password input */}
 
@@ -132,6 +200,18 @@ const SignUp = ({ status, setSignIn }: Props) => {
               onBlur={handleBlur}
             />
           </div>
+          {inputFocus.passwd &&
+            (notValid.passwd.capital ||
+              notValid.passwd.len ||
+              notValid.passwd.num ||
+              notValid.passwd.special) && (
+              <ul>
+                {notValid.passwd.capital && <li>{notValid.passwd.capital}</li>}
+                {notValid.passwd.len && <li>{notValid.passwd.len}</li>}
+                {notValid.passwd.num && <li>{notValid.passwd.num}</li>}
+                {notValid.passwd.special && <li>{notValid.passwd.special}</li>}
+              </ul>
+            )}
 
           {/* Confirm password input */}
 
@@ -150,6 +230,11 @@ const SignUp = ({ status, setSignIn }: Props) => {
               onBlur={handleBlur}
             />
           </div>
+          {inputFocus.passwd2 && notValid.passwd2.match && (
+            <ul>
+              {notValid.passwd2.match && <li>{notValid.passwd2.match}</li>}
+            </ul>
+          )}
 
           <button
             type="submit"

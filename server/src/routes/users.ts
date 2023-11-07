@@ -1,4 +1,5 @@
 import { Elysia } from "elysia";
+import bcrypt from "bcryptjs";
 import { UserModel } from "../models/userModel";
 import { User } from "../utils/types";
 import isValid from "../utils/validateInput";
@@ -39,11 +40,15 @@ const usersRouter = new Elysia({ prefix: "/users" })
 
     // Hash the password
 
+    const saltRounds = 10;
+    const passwdHash = await bcrypt.hash(passwd, saltRounds);
+
     // Add use to database
 
     const newUser = new UserModel({
       email: email,
-      passwd: passwd,
+      passwd: passwdHash,
+      // passwd: passwd,
     });
 
     try {

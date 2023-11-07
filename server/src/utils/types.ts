@@ -9,4 +9,7 @@ export type InfoMsg = {
   message?: string | null;
 };
 
-export type InputFocus = {};
+export type LoginCredentials = {
+  email: string;
+  passwd: string;
+};

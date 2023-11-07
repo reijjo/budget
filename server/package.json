@@ -8,10 +8,14 @@
   "dependencies": {
     "@elysiajs/cors": "^0.7.1",
     "@elysiajs/jwt": "^0.7.0",
+    "bcryptjs": "^2.4.3",
     "elysia": "latest",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.4",
     "@types/mongoose": "^5.11.97",
     "bun-types": "latest"
   },
