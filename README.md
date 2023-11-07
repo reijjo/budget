@@ -1,5 +1,4 @@
-# <img src="https://github.com/reijjo/budget/assets/95418273/c5e5d224-486e-4bbc-9769-c616a657daa3" alt="bag-logo" title="BAG" height="100px" /> BAG - top notch budget tracking app <img src="https://github.com/reijjo/budget/assets/95418273/c5e5d224-486e-4bbc-9769-c616a657daa3" alt="bag-logo" title="BAG" height="100px" /> </br>
-
+# <img src="https://github.com/reijjo/budget/assets/95418273/f85d418a-e594-44b7-985e-549e361b3f96" alt="bag-logo" title="BAG" height="100px" /> </br> top notch budget tracking app 
 ## About
 
 - Budget app to see how much you are spending and on what
