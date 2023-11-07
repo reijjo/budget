@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+// import { isAxiosError } from "axios";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -22,11 +24,16 @@ import {
 import IncomeModal from "../components/modals/IncomeModal";
 import ExpensesModal from "../components/modals/ExpensesModal";
 import BalanceModal from "../components/modals/BalanceModal";
+import userAPI from "../api/users-api";
+// import loginAPI from "../api/login-api";
 
 // Element starts
 
 type Props = {
   user: Logged | null;
+  // setUser: Dispatch<SetStateAction<Logged | null>>;
+
+  // token: string;
 };
 
 const Budget = ({ user }: Props) => {
@@ -55,6 +62,7 @@ const Budget = ({ user }: Props) => {
   const [balanceModalOpen, setBalanceModalOpen] = useState(false);
   const [expensePercent, setExpensePercent] = useState<number[]>([]);
   // const [checkExpenses, setCheckExpenses] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true);
 
   // Chart.js
 
@@ -90,6 +98,8 @@ const Budget = ({ user }: Props) => {
       },
     ],
   };
+
+  // Validate token
 
   // Gets the percentages of every expense
 
@@ -156,9 +166,30 @@ const Budget = ({ user }: Props) => {
     }
   };
 
-  console.log("expenseValues", incomeValues);
+  console.log("expenseValues", incomeValues.Kela);
 
-  // RETURN
+  // Return
+
+  // if (isLoading) {
+  //   // While validating user
+
+  //   return (
+  //     <>
+  //       <h1>LOADIIING</h1>
+  //     </>
+  //   );
+  // }
+
+  // After user validation is done
+
+  useEffect(() => {
+    if (user) {
+      const logged = userAPI.findUser(user);
+      console.log("lgo", logged);
+    }
+  }, [user]);
+
+  console.log("user", user);
 
   return (
     <div id="try-it-out">

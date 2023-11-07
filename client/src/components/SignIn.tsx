@@ -48,8 +48,7 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
       // Set the user and seve token to local storage
       setUser(login);
       window.localStorage.setItem("budgetUser", JSON.stringify(login));
-
-      console.log("logoin", login);
+      window.location.replace("/budget");
     } catch (error: unknown) {
       console.log("error");
       if (isAxiosError(error)) {

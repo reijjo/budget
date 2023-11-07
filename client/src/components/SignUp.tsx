@@ -150,8 +150,6 @@ const SignUp = ({ status, setSignIn }: Props) => {
     }, 6000);
   };
 
-  console.log("inputfocus", inputFocus);
-
   // Return
 
   return (
