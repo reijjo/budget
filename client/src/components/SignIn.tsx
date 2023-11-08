@@ -6,10 +6,8 @@ import {
   Dispatch,
 } from "react";
 import { Link } from "react-router-dom";
-import { isAxiosError } from "axios";
-
+// import { isAxiosError } from "axios";
 import { LoginCredentials, Logged, InfoMsg } from "../utils/types";
-import loginAPI from "../api/login-api";
 import InfoMessage from "./common/InfoMessage";
 
 interface Props {
@@ -42,27 +40,12 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
   const signIn = async (event: FormEvent) => {
     event.preventDefault();
 
-    try {
-      const login = await loginAPI.login(credentials);
+    console.log("Credentilas", credentials);
 
-      // Set the user and seve token to local storage
-      setUser(login);
-      window.localStorage.setItem("budgetUser", JSON.stringify(login));
-      window.location.replace("/budget");
-    } catch (error: unknown) {
-      console.log("error");
-      if (isAxiosError(error)) {
-        setInfoMessage({
-          message: error.response?.data.message,
-          style: "info-error",
-        });
-      } else {
-        console.log("shady error", error);
-      }
-    }
-    setTimeout(() => {
-      setInfoMessage({ message: null });
-    }, 6000);
+    setInfoMessage({ message: "Sign in clicked." });
+
+    // Set the user and seve token to local storage
+    setUser(null);
   };
 
   // Return

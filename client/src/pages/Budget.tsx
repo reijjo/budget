@@ -18,25 +18,15 @@ import {
   ExpenseValues,
   IncomeType,
   IncomeValues,
-  Logged,
 } from "../utils/types";
 
 import IncomeModal from "../components/modals/IncomeModal";
 import ExpensesModal from "../components/modals/ExpensesModal";
 import BalanceModal from "../components/modals/BalanceModal";
-import userAPI from "../api/users-api";
-// import loginAPI from "../api/login-api";
 
 // Element starts
 
-type Props = {
-  user: Logged | null;
-  // setUser: Dispatch<SetStateAction<Logged | null>>;
-
-  // token: string;
-};
-
-const Budget = ({ user }: Props) => {
+const Budget = () => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
   const [income, setIncome] = useState<number>(0);
   const [incomeValues, setIncomeValues] = useState<IncomeValues>({
@@ -181,15 +171,6 @@ const Budget = ({ user }: Props) => {
   // }
 
   // After user validation is done
-
-  useEffect(() => {
-    if (user) {
-      const logged = userAPI.findUser(user);
-      console.log("lgo", logged);
-    }
-  }, [user]);
-
-  console.log("user", user);
 
   return (
     <div id="try-it-out">

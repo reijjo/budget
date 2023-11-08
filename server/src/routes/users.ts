@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import bcrypt from "bcryptjs";
 import { UserModel } from "../models/userModel";
-import { Logged, RegisterInfo } from "../utils/types";
+import { RegisterInfo } from "../utils/types";
 import isValid from "../utils/validateInput";
 
 const usersRouter = new Elysia({ prefix: "/users" })
@@ -64,14 +64,6 @@ const usersRouter = new Elysia({ prefix: "/users" })
       set.status = 500;
       return { message: "Error on server side.", style: "info-error" };
     }
-  })
-
-  // users/:id
-  .get("/:id", async ({ body, set }) => {
-    const user = body as Logged;
-
-    console.log("id", user);
-    // const loggedUser = await UserModel.findById(id)
   });
 
 export { usersRouter };
