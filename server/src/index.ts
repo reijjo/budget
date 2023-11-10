@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import mongoose from "mongoose";
 import { usersRouter } from "./routes/users";
-import { mongoConnect } from "./utils/utils";
+import { mongoConnect, validUser } from "./utils/utils";
 import { loginRouter } from "./routes/login";
 
 const app = new Elysia();
@@ -11,6 +11,7 @@ app.use(cors());
 app.get("/ping", () => "pong");
 app.use(usersRouter);
 app.use(loginRouter);
+// app.use(blogRouter, validUser)
 
 app.listen(Number(Bun.env.PORT));
 

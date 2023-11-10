@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 // import { isAxiosError } from "axios";
 import { LoginCredentials, Logged, InfoMsg } from "../utils/types";
 import InfoMessage from "./common/InfoMessage";
+import loginAPI from "../api/login-api";
+import { isAxiosError } from "axios";
+import { verifyUser } from "../utils/middleware";
 
 interface Props {
   status: boolean;
@@ -35,17 +38,36 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
     }));
   };
 
+  const forgotPw = async () => {
+    verifyUser();
+  };
+
   // Login
 
-  const signIn = async (event: FormEvent) => {
+  const login = async (event: FormEvent) => {
     event.preventDefault();
 
-    console.log("Credentilas", credentials);
+    try {
+      const res = await loginAPI.login(credentials);
+      console.log("res", res);
 
-    setInfoMessage({ message: "Sign in clicked." });
+      window.localStorage.setItem("budgetUser", JSON.stringify(res));
+      setUser(res);
 
-    // Set the user and seve token to local storage
-    setUser(null);
+      setInfoMessage({ message: "All good!", style: "info-success" });
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        setInfoMessage({
+          message: error.response?.data.message,
+          style: error.response?.data.style,
+        });
+      }
+      setUser(null);
+    }
+
+    setTimeout(() => {
+      setInfoMessage({ message: null });
+    }, 5000);
   };
 
   // Return
@@ -53,7 +75,7 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
   return (
     <div className="logo-inputs">
       <p>Sign in</p>
-      <form id="form-login" onSubmit={signIn}>
+      <form id="form-login" onSubmit={login}>
         <div className="login-inputs">
           {/* Email input */}
 
@@ -88,7 +110,8 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
             <a
               className="my-btn text-btn"
               style={{ marginBottom: "16px", fontSize: "0.9rem" }}
-              onClick={() => alert("not working yet")}
+              onClick={forgotPw}
+              // onClick={() => alert("not working yet")}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   event.preventDefault();

@@ -12,6 +12,7 @@ import Budget from "./pages/Budget";
 import Navbar from "./components/common/Navbar";
 import { useEffect, useState } from "react";
 import { Logged } from "./utils/types";
+import Unauthorized from "./pages/Unauthorized";
 // import { LoginCredentials } from "./utils/types";
 
 const MaybeNavbar = () => {
@@ -23,9 +24,16 @@ const MaybeNavbar = () => {
 
 const App = () => {
   const [user, setUser] = useState<Logged | null>(null);
-  // const [token, setToken] = useState("");
 
   // Get logged user
+
+  useEffect(() => {
+    const logged = window.localStorage.getItem("budgetUser");
+    if (logged) {
+      const user = JSON.parse(logged);
+      console.log("USE EFFECT user", user);
+    }
+  }, [setUser]);
 
   // Get all users just for fun
 
@@ -46,7 +54,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing setUser={setUser} />} />
         <Route path="/test" element={<TryItOut />} />
-        <Route path="budget" element={<Budget />} />
+        <Route path="/budget" element={<Budget />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>
     </Router>
   );

@@ -1,13 +1,38 @@
 import { Elysia } from "elysia";
 import bcrypt from "bcryptjs";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { UserModel } from "../models/userModel";
-import { Logged, LoginCredentials, Token } from "../utils/types";
-import { isJwtPayload } from "../utils/typeguard";
+import { LoginCredentials, Token } from "../utils/types";
+import { getTokenFrom } from "../utils/utils";
 
 const loginRouter = new Elysia({ prefix: "/login" })
 
   // login
+
+  .get("/", async ({ request, set }) => {
+    try {
+      const token = getTokenFrom(request);
+      // validUser(request, set);
+
+      if (token) {
+        const decodedToken = jwt.verify(token, `${Bun.env.SECRET}`) as Token;
+        if (!decodedToken.id) {
+          set.status = 401;
+          return { message: "Invalid token.", style: "info-error" };
+        }
+
+        const user = await UserModel.findById(decodedToken.id);
+        set.status = 200;
+        return { validUser: user };
+      } else {
+        return { message: "No token at all.", style: "info-error" };
+      }
+    } catch (error: unknown) {
+      set.status = 401;
+      console.log("decoded token error", error);
+      return { message: "Invalid token", style: "info-error" };
+    }
+  })
 
   .post("/", async ({ body, set }) => {
     try {
@@ -35,7 +60,10 @@ const loginRouter = new Elysia({ prefix: "/login" })
           });
 
           set.status = 200;
-          return { token, user: user.email };
+          return {
+            token,
+            user: user.email,
+          };
 
           // If invalid email / password
         } else {
