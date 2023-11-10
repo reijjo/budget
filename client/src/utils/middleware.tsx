@@ -9,14 +9,12 @@ export const verifyUser = async () => {
       const parsed = JSON.parse(logged) as Logged;
 
       const validate = await loginAPI.validateToken(parsed.token);
-      console.log("forgot token", validate);
 
       if (validate && validate.status === 200) {
-        console.log("WOHO");
-        return true;
+        return { user: parsed, auth: true };
       } else {
         console.log("forgot token", validate);
-        return false;
+        return { auth: false };
       }
     }
   } catch (error: unknown) {

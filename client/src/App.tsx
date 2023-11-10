@@ -17,7 +17,7 @@ import Unauthorized from "./pages/Unauthorized";
 
 const MaybeNavbar = () => {
   const location = useLocation();
-  const isLanding = location.pathname === "/";
+  const isLanding = location.pathname === "/" || location.pathname === "/fake";
 
   return !isLanding ? <Navbar /> : null;
 };
@@ -31,7 +31,7 @@ const App = () => {
     const logged = window.localStorage.getItem("budgetUser");
     if (logged) {
       const user = JSON.parse(logged);
-      console.log("USE EFFECT user", user);
+      setUser(user);
     }
   }, [setUser]);
 
@@ -54,8 +54,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing setUser={setUser} />} />
         <Route path="/test" element={<TryItOut />} />
-        <Route path="/budget" element={<Budget />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route
+          path="/budget"
+          element={<Budget setUser={setUser} user={user} />}
+        />
+        <Route path="/fake" element={<Unauthorized />} />
+        {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>
     </Router>
   );

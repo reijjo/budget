@@ -1,8 +1,22 @@
 import mongoose from "mongoose";
+import { IncomeModel } from "./incomeModel";
+import { ExpenseModel } from "./expenseModel";
 
 const userSchema = new mongoose.Schema({
   email: String,
   passwd: String,
+  incomes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: IncomeModel,
+    },
+  ],
+  expenses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: ExpenseModel,
+    },
+  ],
 });
 
 userSchema.set("toJSON", {

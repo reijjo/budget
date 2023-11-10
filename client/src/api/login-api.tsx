@@ -25,7 +25,6 @@ const validateToken = async (token: string) => {
     };
 
     const res = await axios.get(`${baseUrl}`, config);
-    console.log("Axios validate Token res", res);
 
     return res;
   } catch (error: unknown) {

@@ -54,6 +54,7 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
       window.localStorage.setItem("budgetUser", JSON.stringify(res));
       setUser(res);
 
+      window.location.replace("/budget");
       setInfoMessage({ message: "All good!", style: "info-success" });
     } catch (error: unknown) {
       if (isAxiosError(error)) {

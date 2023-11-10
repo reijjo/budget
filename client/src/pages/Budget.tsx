@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 // import { isAxiosError } from "axios";
 
 import {
@@ -18,15 +18,21 @@ import {
   ExpenseValues,
   IncomeType,
   IncomeValues,
+  Logged,
 } from "../utils/types";
 
 import IncomeModal from "../components/modals/IncomeModal";
 import ExpensesModal from "../components/modals/ExpensesModal";
 import BalanceModal from "../components/modals/BalanceModal";
+import { verifyUser } from "../utils/middleware";
 
+type Props = {
+  setUser: Dispatch<SetStateAction<Logged | null>>;
+  user: Logged | null;
+};
 // Element starts
 
-const Budget = () => {
+const Budget = ({ setUser, user }: Props) => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
   const [income, setIncome] = useState<number>(0);
   const [incomeValues, setIncomeValues] = useState<IncomeValues>({
@@ -90,6 +96,23 @@ const Budget = () => {
   };
 
   // Validate token
+
+  useEffect(() => {
+    const check = async () => {
+      const valid = await verifyUser();
+
+      console.log("valid", valid);
+
+      if (valid && valid.auth === true && valid.user) {
+        setUser(valid.user);
+      } else {
+        window.localStorage.removeItem("budgetUser");
+        setUser(null);
+        window.location.replace("/fake");
+      }
+    };
+    check();
+  }, [setUser]);
 
   // Gets the percentages of every expense
 
@@ -157,6 +180,7 @@ const Budget = () => {
   };
 
   console.log("expenseValues", incomeValues.Kela);
+  console.log("BUDGET USER", user);
 
   // Return
 

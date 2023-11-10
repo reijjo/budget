@@ -11,10 +11,12 @@ const loginRouter = new Elysia({ prefix: "/login" })
 
   .get("/", async ({ request, set }) => {
     try {
+      // Checks the token
       const token = getTokenFrom(request);
-      // validUser(request, set);
 
       if (token) {
+        // Verifies the token
+
         const decodedToken = jwt.verify(token, `${Bun.env.SECRET}`) as Token;
         if (!decodedToken.id) {
           set.status = 401;
