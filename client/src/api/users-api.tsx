@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Logged, RegisterInfo } from "../utils/types";
+import { RegisterInfo } from "../utils/types";
 
 const baseUrl = "http://localhost:3001/users";
 
@@ -15,17 +15,18 @@ const createUser = async (newUser: RegisterInfo) => {
   return res.data;
 };
 
-// users/:id
+// users/:email
 
-const findUser = async (id: Logged) => {
-  const res = await axios.get(`${baseUrl}/${id}`);
+const itsMe = async (email: string) => {
+  console.log("AXIOS", email);
+  const res = await axios.get(`${baseUrl}/${email}`);
   return res.data;
 };
 
 const userAPI = {
   allUsers,
   createUser,
-  findUser,
+  itsMe,
 };
 
 export default userAPI;

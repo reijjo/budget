@@ -19,20 +19,22 @@ import {
   IncomeType,
   IncomeValues,
   Logged,
+  UserData,
 } from "../utils/types";
 
 import IncomeModal from "../components/modals/IncomeModal";
 import ExpensesModal from "../components/modals/ExpensesModal";
 import BalanceModal from "../components/modals/BalanceModal";
 import { verifyUser } from "../utils/middleware";
+import userAPI from "../api/users-api";
 
 type Props = {
   setUser: Dispatch<SetStateAction<Logged | null>>;
-  user: Logged | null;
+  // user: Logged | null;
 };
 // Element starts
 
-const Budget = ({ setUser, user }: Props) => {
+const Budget = ({ setUser }: Props) => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
   const [income, setIncome] = useState<number>(0);
   const [incomeValues, setIncomeValues] = useState<IncomeValues>({
@@ -59,6 +61,12 @@ const Budget = ({ setUser, user }: Props) => {
   const [expensePercent, setExpensePercent] = useState<number[]>([]);
   // const [checkExpenses, setCheckExpenses] = useState(true)
   // const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState<UserData>({
+    id: "",
+    email: "",
+    incomes: incomeValues,
+    expenses: expenseValues,
+  });
 
   // Chart.js
 
@@ -95,16 +103,17 @@ const Budget = ({ setUser, user }: Props) => {
     ],
   };
 
-  // Validate token
+  // Validate token / user
 
   useEffect(() => {
     const check = async () => {
       const valid = await verifyUser();
 
-      console.log("valid", valid);
-
       if (valid && valid.auth === true && valid.user) {
         setUser(valid.user);
+
+        const userData = await userAPI.itsMe(valid.user.email);
+        setUserData(userData);
       } else {
         window.localStorage.removeItem("budgetUser");
         setUser(null);
@@ -113,6 +122,8 @@ const Budget = ({ setUser, user }: Props) => {
     };
     check();
   }, [setUser]);
+
+  // Get user from database
 
   // Gets the percentages of every expense
 
@@ -180,7 +191,7 @@ const Budget = ({ setUser, user }: Props) => {
   };
 
   console.log("expenseValues", incomeValues.Kela);
-  console.log("BUDGET USER", user);
+  console.log("BUDGET USER", userData);
 
   // Return
 

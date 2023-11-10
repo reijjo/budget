@@ -54,10 +54,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing setUser={setUser} />} />
         <Route path="/test" element={<TryItOut />} />
-        <Route
-          path="/budget"
-          element={<Budget setUser={setUser} user={user} />}
-        />
+        <Route path="/budget" element={<Budget setUser={setUser} />} />
         <Route path="/fake" element={<Unauthorized />} />
         {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>

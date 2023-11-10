@@ -77,3 +77,10 @@ export type FormErrors = {
     match: string | null;
   };
 };
+
+export type UserData = {
+  email: string;
+  id: string;
+  incomes: IncomeValues;
+  expenses: ExpenseValues;
+};

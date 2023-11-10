@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import bcrypt from "bcryptjs";
 import { UserModel } from "../models/userModel";
-import { RegisterInfo } from "../utils/types";
+import { Logged, RegisterInfo } from "../utils/types";
 import isValid from "../utils/validateInput";
 
 const usersRouter = new Elysia({ prefix: "/users" })
@@ -61,6 +61,26 @@ const usersRouter = new Elysia({ prefix: "/users" })
       };
       // return `${savedUser.email} registered!`;
     } catch (error: unknown) {
+      set.status = 500;
+      return { message: "Error on server side.", style: "info-error" };
+    }
+  })
+
+  // users/:email
+
+  .get("/:email", async ({ params, set }) => {
+    try {
+      const { email } = params;
+
+      const itsMe = await UserModel.findOne({ email: email })
+        .select("-passwd")
+        .populate("incomes")
+        .populate("expenses");
+      console.log("itsMe", email);
+      set.status = 200;
+      return itsMe;
+    } catch (error: unknown) {
+      console.log("error getting ME", error);
       set.status = 500;
       return { message: "Error on server side.", style: "info-error" };
     }

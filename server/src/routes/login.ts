@@ -64,7 +64,7 @@ const loginRouter = new Elysia({ prefix: "/login" })
           set.status = 200;
           return {
             token,
-            user: user.email,
+            email: user.email,
           };
 
           // If invalid email / password
