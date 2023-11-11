@@ -22,19 +22,19 @@ import {
   UserData,
 } from "../utils/types";
 
-import IncomeModal from "../components/modals/IncomeModal";
 import ExpensesModal from "../components/modals/ExpensesModal";
 import BalanceModal from "../components/modals/BalanceModal";
 import { verifyUser } from "../utils/middleware";
 import userAPI from "../api/users-api";
+import UserIncome from "../components/modals/UserIncome";
 
 type Props = {
   setUser: Dispatch<SetStateAction<Logged | null>>;
-  // user: Logged | null;
+  user: Logged | null;
 };
 // Element starts
 
-const Budget = ({ setUser }: Props) => {
+const Budget = ({ setUser, user }: Props) => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
   const [income, setIncome] = useState<number>(0);
   const [incomeValues, setIncomeValues] = useState<IncomeValues>({
@@ -191,7 +191,8 @@ const Budget = ({ setUser }: Props) => {
   };
 
   console.log("expenseValues", incomeValues.Kela);
-  console.log("BUDGET USER", userData);
+  console.log("BUDGET USERDATA", userData);
+  console.log("budget user", user);
 
   // Return
 
@@ -210,9 +211,10 @@ const Budget = ({ setUser }: Props) => {
   return (
     <div id="try-it-out">
       {incomeModalOpen && (
-        <IncomeModal
+        <UserIncome
           handleCloseIncome={handleCloseIncome}
           setIncome={setIncome}
+          userData={userData}
         />
       )}
       {expensesModalOpen && (

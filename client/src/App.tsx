@@ -40,7 +40,7 @@ const App = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       const users = await userAPI.allUsers();
-      console.log("users", users);
+      console.table("users", users);
     };
     getAllUsers();
   }, []);
@@ -54,7 +54,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing setUser={setUser} />} />
         <Route path="/test" element={<TryItOut />} />
-        <Route path="/budget" element={<Budget setUser={setUser} />} />
+        <Route
+          path="/budget"
+          element={<Budget setUser={setUser} user={user} />}
+        />
         <Route path="/fake" element={<Unauthorized />} />
         {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>

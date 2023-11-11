@@ -51,3 +51,41 @@ export const validUser = async (request: Request, set: { status: number }) => {
     return { message: "Invalid token", style: "info-error" };
   }
 };
+
+export const checkTokenValidity = async (
+  request: Request,
+  set: { status: number },
+  next: Function
+) => {
+  try {
+    // Checks the token
+    const token = getTokenFrom(request);
+
+    if (token) {
+      // Verifies the token
+      const decodedToken = jwt.verify(token, `${Bun.env.SECRET}`) as Token;
+
+      if (!decodedToken.id) {
+        set.status = 401;
+        return { message: "Invalid token.", style: "info-error" };
+      }
+
+      const user = await UserModel.findById(decodedToken.id);
+
+      if (!user) {
+        set.status = 401;
+        return { message: "User not found.", style: "info-error" };
+      }
+
+      // If the token is valid, continue to the next middleware or route handler
+      await next();
+    } else {
+      set.status = 401;
+      return { message: "No token provided.", style: "info-error" };
+    }
+  } catch (error) {
+    set.status = 401;
+    console.log("Token verification error", error);
+    return { message: "Invalid token.", style: "info-error" };
+  }
+};

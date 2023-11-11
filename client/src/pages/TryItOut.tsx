@@ -49,6 +49,8 @@ const TryItOut = () => {
   const [expensePercent, setExpensePercent] = useState<number[]>([]);
   // const [checkExpenses, setCheckExpenses] = useState(true)
 
+  const userData = null;
+
   // Chart.js
 
   const donitsidata = {
@@ -159,6 +161,7 @@ const TryItOut = () => {
         <IncomeModal
           handleCloseIncome={handleCloseIncome}
           setIncome={setIncome}
+          userData={userData}
         />
       )}
       {expensesModalOpen && (

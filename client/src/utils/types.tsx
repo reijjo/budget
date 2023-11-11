@@ -17,6 +17,11 @@ export enum ExpenseType {
   Other = "Other",
 }
 
+export type NewIncome = {
+  value: number;
+  type: IncomeType;
+};
+
 export type IncomeValues = {
   Salary: number;
   Kela: number;

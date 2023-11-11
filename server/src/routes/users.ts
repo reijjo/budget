@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import bcrypt from "bcryptjs";
 import { UserModel } from "../models/userModel";
-import { Logged, RegisterInfo } from "../utils/types";
+import { RegisterInfo } from "../utils/types";
 import isValid from "../utils/validateInput";
 
 const usersRouter = new Elysia({ prefix: "/users" })
@@ -9,7 +9,11 @@ const usersRouter = new Elysia({ prefix: "/users" })
   // users
 
   .get("/", async () => {
-    const users = await UserModel.find({});
+    const users = await UserModel.find({}).populate("incomes", {
+      value: 1,
+      type: 1,
+    });
+    // .populate("expenses");
     return users;
   })
 
@@ -74,8 +78,8 @@ const usersRouter = new Elysia({ prefix: "/users" })
 
       const itsMe = await UserModel.findOne({ email: email })
         .select("-passwd")
-        .populate("incomes")
-        .populate("expenses");
+        .populate("incomes");
+      // .populate("expenses");
       console.log("itsMe", email);
       set.status = 200;
       return itsMe;

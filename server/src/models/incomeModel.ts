@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
+import { IncomeType } from "../utils/types";
 
 const incomeSchema = new mongoose.Schema({
-  salary: Number,
-  kela: Number,
-  savings: Number,
-  other: Number,
+  value: Number,
+  type: {
+    type: String,
+    enum: Object.values(IncomeType),
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "UserModel",
+    ref: "User",
   },
 });
 

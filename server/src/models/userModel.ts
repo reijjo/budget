@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { IncomeModel } from "./incomeModel";
-import { ExpenseModel } from "./expenseModel";
 
 const userSchema = new mongoose.Schema({
   email: String,
@@ -8,13 +6,13 @@ const userSchema = new mongoose.Schema({
   incomes: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: IncomeModel,
+      ref: "Income",
     },
   ],
   expenses: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: ExpenseModel,
+      ref: "Expense",
     },
   ],
 });

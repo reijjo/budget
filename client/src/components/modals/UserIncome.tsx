@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IncomeType, UserData } from "../../utils/types";
-// import incomeAPI from "../../api/income-api";
-// import { isAxiosError } from "axios";
-// import { verifyUser } from "../../utils/middleware";
+import incomeAPI from "../../api/income-api";
+import { isAxiosError } from "axios";
+import { verifyUser } from "../../utils/middleware";
 
 type IncomeModalProps = {
   handleCloseIncome: (newBalance: number, incomeType: IncomeType) => void;
@@ -10,11 +10,11 @@ type IncomeModalProps = {
   userData: UserData | null;
 };
 
-const IncomeModal = ({
+const UserIncome = ({
   handleCloseIncome,
   setIncome,
-}: // userData,
-IncomeModalProps) => {
+  userData,
+}: IncomeModalProps) => {
   const [incomeValue, setIncomeValue] = useState("");
   const [selectedButton, setSelectedButton] = useState<IncomeType | null>(null);
 
@@ -26,16 +26,48 @@ IncomeModalProps) => {
     if (!selectedButton) {
       return console.log("select a type");
     }
+    try {
+      // Checks that new income is a number
+      const income = parseFloat(incomeValue);
+      if (!isNaN(income)) {
+        // NewIncome object
 
-    const income = parseFloat(incomeValue);
-    if (!isNaN(income)) {
-      console.log("thats not a number", income);
-    } else {
-      setIncome(income);
+        if (userData) {
+          const newIncome = {
+            value: income,
+            type: selectedButton,
+            userId: userData.id,
+          };
+
+          // Verify the token from localStorage
+
+          const verify = await verifyUser();
+          if (verify && verify.user && verify.auth === true) {
+            incomeAPI.setToken(verify.user.token);
+            const incomeRes = await incomeAPI.addIncome(newIncome);
+            console.log("incomeres", incomeRes);
+
+            const incomeValue = incomeRes.savedIncome.value;
+            const incomeType = incomeRes.savedIncome.type;
+            setIncome(incomeValue);
+
+            // Closes the modal with the new added income and income by type
+
+            handleCloseIncome(incomeValue, incomeType);
+          } else {
+            window.location.replace("/fake");
+          }
+        }
+
+        // setIncome(income);
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log("Axios  income error", error);
+      } else {
+        console.log("income error", error);
+      }
     }
-
-    // Closes the modal with the new added income and income by type
-    handleCloseIncome(income, selectedButton);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -148,4 +180,4 @@ IncomeModalProps) => {
   );
 };
 
-export default IncomeModal;
+export default UserIncome;
