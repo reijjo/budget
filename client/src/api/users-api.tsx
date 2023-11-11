@@ -3,6 +3,12 @@ import { RegisterInfo } from "../utils/types";
 
 const baseUrl = "http://localhost:3001/users";
 
+// let token: string | null = null;
+
+// const setToken = (newToken: string) => {
+//   token = `${newToken}`;
+// };
+
 // users
 
 const allUsers = async () => {
@@ -18,7 +24,6 @@ const createUser = async (newUser: RegisterInfo) => {
 // users/:email
 
 const itsMe = async (email: string) => {
-  console.log("AXIOS", email);
   const res = await axios.get(`${baseUrl}/${email}`);
   return res.data;
 };

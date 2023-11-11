@@ -1,4 +1,5 @@
-# <img src="https://github.com/reijjo/budget/assets/95418273/f85d418a-e594-44b7-985e-549e361b3f96" alt="bag-logo" title="BAG" height="100px" /> </br> top notch budget tracking app 
+# <img src="https://github.com/reijjo/budget/assets/95418273/f85d418a-e594-44b7-985e-549e361b3f96" alt="bag-logo" title="BAG" height="100px" /> </br> top notch budget tracking app
+
 ## About
 
 - Budget app to see how much you are spending and on what
@@ -28,6 +29,8 @@
 - email confirmation
 - input focus
 - forgot password
+- logout
+- refresh token popup
 
-- Backend
+- Backend expenses
 - Redux for not registered users (maybe)

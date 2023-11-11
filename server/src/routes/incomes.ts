@@ -56,6 +56,35 @@ const incomeRouter = new Elysia({ prefix: "/incomes" })
       set.status = 500;
       console.log("Server error", error);
     }
+  })
+
+  // incomes/:email
+  .get("/:email", async ({ params, request, set }) => {
+    try {
+      const email = params.email;
+
+      // Check that the token is valid
+
+      const validateUser = await validUser(request, { status: 200 });
+      if (validateUser) {
+        // Check that the there is an user with the email
+
+        const getUser = await UserModel.findOne({ email: email });
+        if (!getUser) {
+          set.status = 404;
+          return { message: "Email not found" };
+        } else {
+          // Get all Incomes with the user id
+          const myIncomes = await IncomeModel.find({ user: getUser._id });
+
+          // console.log("myinon", myIncomes);
+          return { myIncomes };
+        }
+      }
+    } catch (error: unknown) {
+      console.log("incomes/email error", error);
+      set.status = 500;
+    }
   });
 
 export { incomeRouter };

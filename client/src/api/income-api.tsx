@@ -19,9 +19,21 @@ const addIncome = async (newIncome: NewIncome) => {
   return res.data;
 };
 
+// income/:email
+
+const getUserIncomes = async (email: string) => {
+  console.log("axios email", email);
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const res = await axios.get(`${baseUrl}/${email}`, config);
+  return res.data;
+};
+
 const incomeAPI = {
   setToken,
   addIncome,
+  getUserIncomes,
 };
 
 export default incomeAPI;

@@ -27,6 +27,7 @@ import BalanceModal from "../components/modals/BalanceModal";
 import { verifyUser } from "../utils/middleware";
 import userAPI from "../api/users-api";
 import UserIncome from "../components/modals/UserIncome";
+import incomeAPI from "../api/income-api";
 
 type Props = {
   setUser: Dispatch<SetStateAction<Logged | null>>;
@@ -123,7 +124,37 @@ const Budget = ({ setUser, user }: Props) => {
     check();
   }, [setUser]);
 
-  // Get user from database
+  // Get incomes / expenses from database
+
+  useEffect(() => {
+    const myIncome = async (email: string) => {
+      try {
+        // Verify user first
+
+        const verify = await verifyUser();
+        if (verify && verify.user && verify.auth === true) {
+          incomeAPI.setToken(verify.user.token);
+          const allIncomes = await incomeAPI.getUserIncomes(email);
+          console.log("allIncomes", allIncomes);
+          if (allIncomes.length > 0) {
+            const updatedIncome = allIncomes.myIncomes.map(
+              (income: IncomeValues) => ({
+                value: income.value,
+                type: income.type,
+              })
+            );
+            console.log("iupdated income", updatedIncome);
+            setIncomeValues(updatedIncome);
+          }
+        }
+      } catch (error) {
+        console.log("myIncome error", error);
+      }
+    };
+    if (user !== null) {
+      myIncome(user?.email);
+    }
+  }, [user, setIncome]);
 
   // Gets the percentages of every expense
 
@@ -190,23 +221,8 @@ const Budget = ({ setUser, user }: Props) => {
     }
   };
 
-  console.log("expenseValues", incomeValues.Kela);
+  console.log("INCOMEVALUES", incomeValues);
   console.log("BUDGET USERDATA", userData);
-  console.log("budget user", user);
-
-  // Return
-
-  // if (isLoading) {
-  //   // While validating user
-
-  //   return (
-  //     <>
-  //       <h1>LOADIIING</h1>
-  //     </>
-  //   );
-  // }
-
-  // After user validation is done
 
   return (
     <div id="try-it-out">

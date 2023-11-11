@@ -27,6 +27,7 @@ export type IncomeValues = {
   Kela: number;
   Savings: number;
   Other: number;
+  [key: string]: number;
 };
 
 export type ExpenseValues = {
