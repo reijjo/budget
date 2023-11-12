@@ -77,8 +77,20 @@ const incomeRouter = new Elysia({ prefix: "/incomes" })
           // Get all Incomes with the user id
           const myIncomes = await IncomeModel.find({ user: getUser._id });
 
-          // console.log("myinon", myIncomes);
-          return { myIncomes };
+          // Get total incomes
+          const totalIncomes = await IncomeModel.aggregate([
+            {
+              $match: { user: getUser._id },
+            },
+            {
+              $group: {
+                _id: null,
+                total: { $sum: "$value" },
+              },
+            },
+          ]);
+
+          return { myIncomes, totalIncomes };
         }
       }
     } catch (error: unknown) {

@@ -44,6 +44,7 @@ const Budget = ({ setUser, user }: Props) => {
     Savings: 0,
     Other: 0,
   });
+
   const [expenses, setExpenses] = useState<number>(0);
   const [expenseValues, setExpenseValues] = useState<ExpenseValues>({
     Rent: 0,
@@ -68,6 +69,7 @@ const Budget = ({ setUser, user }: Props) => {
     incomes: incomeValues,
     expenses: expenseValues,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   // Chart.js
 
@@ -135,26 +137,33 @@ const Budget = ({ setUser, user }: Props) => {
         if (verify && verify.user && verify.auth === true) {
           incomeAPI.setToken(verify.user.token);
           const allIncomes = await incomeAPI.getUserIncomes(email);
-          console.log("allIncomes", allIncomes);
-          if (allIncomes.length > 0) {
-            const updatedIncome = allIncomes.myIncomes.map(
-              (income: IncomeValues) => ({
-                value: income.value,
-                type: income.type,
-              })
-            );
-            console.log("iupdated income", updatedIncome);
-            setIncomeValues(updatedIncome);
-          }
+
+          console.log("totota", allIncomes);
+          // Transform the data to correct format and set the values to matching type
+
+          const updatedIncome = allIncomes.myIncomes.reduce(
+            (acc: IncomeValues, income: IncomeValues) => {
+              acc[income.type] += income.value;
+              return acc;
+            },
+            { ...incomeValues }
+          );
+          setIncomeValues((prevValues) => {
+            return { ...prevValues, ...updatedIncome };
+          });
+          setIncome(allIncomes.totalIncomes[0].total);
         }
       } catch (error) {
         console.log("myIncome error", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     if (user !== null) {
       myIncome(user?.email);
     }
-  }, [user, setIncome]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, setIncomeValues, setIncome]);
 
   // Gets the percentages of every expense
 
@@ -222,7 +231,20 @@ const Budget = ({ setUser, user }: Props) => {
   };
 
   console.log("INCOMEVALUES", incomeValues);
-  console.log("BUDGET USERDATA", userData);
+  if (userData.id) {
+    console.log("BUDGET USERDATA", userData);
+  }
+
+  console.log("income", income);
+  // Return
+
+  if (isLoading) {
+    return (
+      <>
+        <h1>loading...</h1>
+      </>
+    );
+  }
 
   return (
     <div id="try-it-out">
@@ -256,7 +278,7 @@ const Budget = ({ setUser, user }: Props) => {
 
                 <div className="donitsi-label">
                   <h3 style={{ color: "var(--primarylight)" }}>
-                    +{income.toFixed(2)} €
+                    +{income.toFixed(2)} €{/* {income} */}
                   </h3>
                   <h3 style={{ color: "var(--secondary)" }}>
                     -{expenses.toFixed(2)} €

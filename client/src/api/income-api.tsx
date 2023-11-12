@@ -22,7 +22,6 @@ const addIncome = async (newIncome: NewIncome) => {
 // income/:email
 
 const getUserIncomes = async (email: string) => {
-  console.log("axios email", email);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
