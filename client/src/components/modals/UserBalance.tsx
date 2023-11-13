@@ -1,6 +1,20 @@
-const UserBalance = () => {
+import { Dispatch, SetStateAction } from "react";
+
+type Props = {
+  setBalanceModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const UserBalance = ({ setBalanceModalOpen }: Props) => {
   return (
     <div className="inside-balancemodal">
+      <a
+        className="link-nostyle nav-close-button"
+        style={{ color: "var(--secondary2)" }}
+        title="close nav"
+        onClick={() => setBalanceModalOpen(false)}
+      >
+        x
+      </a>
       <div className="inside-income">
         <h3>Incomes</h3>
         <h4 style={{ textAlign: "center" }}>OIKEEE VERSIOO.</h4>

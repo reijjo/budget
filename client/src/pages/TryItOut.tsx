@@ -130,7 +130,7 @@ const TryItOut = () => {
       <div className="balance">
         {balanceModalOpen ? (
           <div className={`balance-modal ${balanceModalOpen ? "open" : ""}`}>
-            <BalanceModal />
+            <BalanceModal setBalanceModalOpen={setBalanceModalOpen} />
           </div>
         ) : (
           <div className="saldo">

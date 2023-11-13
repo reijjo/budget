@@ -8,7 +8,6 @@ import {
   UserData,
 } from "../utils/types";
 
-import BalanceModal from "../components/modals/try-it/BalanceModal";
 import { verifyUser } from "../utils/middleware";
 import userAPI from "../api/users-api";
 import UserIncome from "../components/modals/UserIncome";
@@ -231,7 +230,7 @@ const Budget = ({ setUser, user }: Props) => {
       <div className="balance">
         {balanceModalOpen ? (
           <div className={`balance-modal ${balanceModalOpen ? "open" : ""}`}>
-            <UserBalance />
+            <UserBalance setBalanceModalOpen={setBalanceModalOpen} />
           </div>
         ) : (
           <div className="saldo">
