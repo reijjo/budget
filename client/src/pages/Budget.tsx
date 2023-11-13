@@ -141,9 +141,6 @@ const Budget = ({ setUser, user }: Props) => {
           const allIncomes = await incomeAPI.getUserIncomes(email);
           const allExpenses = await expenseAPI.getUserExpenses(email);
 
-          console.log("totot income", allIncomes);
-          console.log("totot expenses", allExpenses);
-
           // Transform the data to correct format and set the values to matching type
 
           const updatedIncome = allIncomes.myIncomes.reduce(
@@ -234,7 +231,10 @@ const Budget = ({ setUser, user }: Props) => {
     }
   };
 
-  const handleCloseExpense = (newBalance: number, expenseType: ExpenseType) => {
+  const handleCloseExpenses = (
+    newBalance: number,
+    expenseType: ExpenseType
+  ) => {
     console.log("hadnelClose expenses ?");
     setExpensesModalOpen(false);
     if (!isNaN(newBalance)) {
@@ -246,13 +246,8 @@ const Budget = ({ setUser, user }: Props) => {
     }
   };
 
-  // console.log("INCOMEVALUES", incomeValues);
-  // if (userData.id) {
-  //   console.log("BUDGET USERDATA", userData);
-  // }
+  // console.log("expenseValues", expenseValues);
 
-  console.log("total income", income);
-  console.log("total expsnes", expenses);
   // Return
 
   if (isLoading) {
@@ -274,7 +269,7 @@ const Budget = ({ setUser, user }: Props) => {
       )}
       {expensesModalOpen && (
         <UserExpense
-          handleCloseExpenses={handleCloseExpense}
+          handleCloseExpenses={handleCloseExpenses}
           setExpenses={setExpenses}
           userData={userData}
         />

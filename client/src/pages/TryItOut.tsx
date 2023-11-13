@@ -5,11 +5,22 @@ import {
   Tooltip,
   Legend,
   Colors,
+  CategoryScale,
+  LinearScale,
+  BarElement,
   // ChartConfiguration,
 } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+// import { Bar } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend, Colors);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  Colors,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 import {
   ExpenseType,
@@ -21,6 +32,8 @@ import {
 import IncomeModal from "../components/modals/try-it/IncomeModal";
 import ExpensesModal from "../components/modals/try-it/ExpensesModal";
 import BalanceModal from "../components/modals/try-it/BalanceModal";
+import Donitsi from "../components/charts/Donitsi";
+import BarChart from "../components/charts/BarChart";
 
 const TryItOut = () => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance
@@ -50,41 +63,6 @@ const TryItOut = () => {
   // const [checkExpenses, setCheckExpenses] = useState(true)
 
   const userData = null;
-
-  // Chart.js
-
-  const donitsidata = {
-    labels: Object.keys(expenseValues),
-    datasets: [
-      {
-        label: "% of expenses",
-        data: expensePercent,
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.5)",
-          "rgba(54, 162, 235, 0.5)",
-          "rgba(255, 206, 86, 0.5)",
-          "rgba(75, 192, 192, 0.5)",
-          "rgba(153, 102, 255, 0.5)",
-          "rgba(255, 159, 64, 0.5)",
-          "rgba(128, 0, 128, 0.5)",
-          "rgba(0, 128, 0, 0.5)",
-          "rgba(0, 0, 128, 0.5)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(128, 0, 128, 1)",
-          "rgba(0, 128, 0, 1)",
-          "rgba(0, 0, 128, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
 
   // Gets the percentages of every expense
 
@@ -141,6 +119,8 @@ const TryItOut = () => {
     newBalance: number,
     expenseType: ExpenseType
   ) => {
+    console.log("hadnelClose expenses ?");
+
     setExpensesModalOpen(false);
     if (!isNaN(newBalance)) {
       setExpenses(expenses + newBalance);
@@ -151,7 +131,7 @@ const TryItOut = () => {
     }
   };
 
-  console.log("expenseValues", incomeValues);
+  console.log("expenseValues", expenseValues, "incomevalues", incomeValues);
 
   // RETURN
 
@@ -178,14 +158,16 @@ const TryItOut = () => {
         ) : (
           <div className="saldo">
             <div className="income-expenses">
-              <div className="donitsi">
-                <Doughnut
-                  data={donitsidata}
-                  // options={donitsioptions}
-                  // options={{ maintainAspectRatio: true, responsive: true }}
-                />
+              <Donitsi
+                expenseValues={expenseValues}
+                expensePercent={expensePercent}
+                income={income}
+                expenses={expenses}
+              />
+              {/* <div className="bar">
+                <Bar options={barOptions} data={barData} />
 
-                <div className="donitsi-label">
+                <div className="bar-label">
                   <h3 style={{ color: "var(--primarylight)" }}>
                     +{income.toFixed(2)} €
                   </h3>
@@ -193,7 +175,13 @@ const TryItOut = () => {
                     -{expenses.toFixed(2)} €
                   </h3>
                 </div>
-              </div>
+              </div> */}
+              <BarChart
+                expenseValues={expenseValues}
+                expensePercent={expensePercent}
+                income={income}
+                expenses={expenses}
+              />
             </div>
           </div>
         )}

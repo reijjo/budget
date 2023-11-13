@@ -15,9 +15,13 @@ import { Logged } from "./utils/types";
 import Unauthorized from "./pages/Unauthorized";
 // import { LoginCredentials } from "./utils/types";
 
-const MaybeNavbar = () => {
+const MaybeNavbar = ({ user }: { user: Logged | null }) => {
+  console.log("user NAVBAR", user);
   const location = useLocation();
-  const isLanding = location.pathname === "/" || location.pathname === "/fake";
+
+  const isLanding =
+    (location.pathname === "/" && user === null) ||
+    location.pathname === "/fake";
 
   return !isLanding ? <Navbar /> : null;
 };
@@ -45,12 +49,12 @@ const App = () => {
     getAllUsers();
   }, []);
 
-  console.log("User", user);
+  // console.log("User", user);
   // Return
 
   return (
     <Router>
-      <MaybeNavbar />
+      <MaybeNavbar user={user} />
       <Routes>
         <Route path="/" element={<Landing setUser={setUser} />} />
         <Route path="/test" element={<TryItOut />} />

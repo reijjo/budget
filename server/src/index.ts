@@ -2,13 +2,19 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import mongoose from "mongoose";
 import { usersRouter } from "./routes/users";
-import { mongoConnect, validUser } from "./utils/utils";
+import { mongoConnect } from "./utils/utils";
 import { loginRouter } from "./routes/login";
 import { incomeRouter } from "./routes/incomes";
 import { expenseRouter } from "./routes/expenses";
+import { origin } from "bun";
 
 const app = new Elysia();
-app.use(cors());
+app.use(
+  cors({
+    origin: /localhost/,
+    allowedHeaders: ["Authorization", "Content-Type"],
+  })
+);
 
 app.get("/ping", () => "pong");
 app.use(usersRouter);

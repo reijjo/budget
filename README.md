@@ -25,15 +25,15 @@
 
 ## TODO
 
+- TESTS!
+
 - Change chart type @media (max-width: 600)
 - email confirmation
-- input focus
 - forgot password
-- logout
 - refresh token popup
 - fresher isLoading & 403page
-- button to budget if logged in
-
-- Backend expenses
+- more mobile
+- localstorage -> cookies
 - Chart for incomes
+- sorting etc
 - Redux for not registered users (maybe)

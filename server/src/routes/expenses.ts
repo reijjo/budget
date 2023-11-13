@@ -29,15 +29,11 @@ const expenseRouter = new Elysia({ prefix: "/expenses" })
           return { message: "Unauhtorized" };
         }
 
-        console.log("getuser", getUser);
-
         const addMoney = new ExpenseModel({
           value: expense.value,
           type: expense.type,
           user: getUser._id,
         });
-
-        console.log("add", addMoney);
 
         const savedExpense = await addMoney.save();
         getUser.expenses = getUser.expenses.concat(savedExpense._id);

@@ -28,6 +28,27 @@ const Navbar = () => {
             <a className="link-nostyle" onClick={() => handleNavi("/")}>
               Home
             </a>
+            <a className="link-nostyle" onClick={() => handleNavi("/budget")}>
+              My Budget
+            </a>
+            <hr
+              style={{
+                width: "80%",
+                margin: "8px 2px 16px",
+                borderTop: "1px solid var(--primary)",
+                borderLeft: "none",
+                borderRight: "none",
+                borderBottom: "1px solid var(--primary)",
+              }}
+            />
+            <a
+              className="link-logout"
+              onClick={() => {
+                window.localStorage.clear(), window.location.replace("/");
+              }}
+            >
+              Logout
+            </a>
           </div>
         </div>
       ) : (

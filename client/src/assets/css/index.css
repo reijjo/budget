@@ -67,12 +67,13 @@ nav {
   width: 48px;
   align-items: center;
   justify-content: center;
-  transition: width 1s ease, height 1s ease;
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 .nav-closed img {
-  height: 100%;
+  height: 48px;
   width: 100%;
+  transition: width 0.3s ease;
 }
 
 .nav-open {
@@ -81,7 +82,7 @@ nav {
   height: max-content;
   background-color: var(--primarydark);
   position: relative;
-  transition: width 1s ease, height 1s ease;
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 .nav-close-button {
@@ -104,15 +105,25 @@ nav {
   flex-direction: column;
   align-items: center;
   padding: 20% 0;
+  white-space: nowrap;
 }
 
-.menu-links > a {
+.menu-links > .link-nostyle {
   margin: 8px;
 }
 
-.menu-links > a:hover {
+.menu-links > .link-nostyle:hover {
   cursor: pointer;
   color: var(--primarylight);
+}
+
+.link-logout {
+  /* margin-top: 32px; */
+  color: var(--secondary);
+}
+
+.link-logout:hover {
+  color: var(--secondary2);
 }
 
 /* END Navbar & Footer */
