@@ -58,8 +58,6 @@ const UserIncome = ({
             window.location.replace("/fake");
           }
         }
-
-        // setIncome(income);
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -74,7 +72,6 @@ const UserIncome = ({
     setIncomeValue(event.target.value);
   };
 
-  console.log("selectedButton", selectedButton);
   // RETURN
 
   return (

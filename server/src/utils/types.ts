@@ -30,19 +30,6 @@ export enum IncomeType {
   Other = "Other",
 }
 
-export type IncomeValues = {
-  Salary: number;
-  Kela: number;
-  Savings: number;
-  Other: number;
-};
-
-export type NewIncome = {
-  value: number;
-  type: IncomeType;
-  userId: string;
-};
-
 export enum ExpenseType {
   Rent = "Rent",
   Bills = "Bills",
@@ -54,3 +41,35 @@ export enum ExpenseType {
   Food = "Food",
   Other = "Other",
 }
+
+export type IncomeValues = {
+  Salary: number;
+  Kela: number;
+  Savings: number;
+  Other: number;
+};
+
+export type ExpenseValues = {
+  Rent: number;
+  Bills: number;
+  Shopping: number;
+  Savings: number;
+  Restaurant: number;
+  Pets: number;
+  Transport: number;
+  Food: number;
+  Other: number;
+  [key: string]: number;
+};
+
+export type NewIncome = {
+  value: number;
+  type: IncomeType;
+  userId: string;
+};
+
+export type NewExpense = {
+  value: number;
+  type: ExpenseType;
+  userId: string;
+};

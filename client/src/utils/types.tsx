@@ -22,6 +22,11 @@ export type NewIncome = {
   type: IncomeType;
 };
 
+export type NewExpense = {
+  value: number;
+  type: ExpenseType;
+};
+
 export type IncomeValues = {
   Salary: number;
   Kela: number;

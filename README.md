@@ -32,6 +32,8 @@
 - logout
 - refresh token popup
 - fresher isLoading & 403page
+- button to budget if logged in
 
 - Backend expenses
+- Chart for incomes
 - Redux for not registered users (maybe)

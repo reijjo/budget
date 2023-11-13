@@ -22,12 +22,13 @@ import {
   UserData,
 } from "../utils/types";
 
-import ExpensesModal from "../components/modals/ExpensesModal";
-import BalanceModal from "../components/modals/BalanceModal";
+import BalanceModal from "../components/modals/try-it/BalanceModal";
 import { verifyUser } from "../utils/middleware";
 import userAPI from "../api/users-api";
 import UserIncome from "../components/modals/UserIncome";
 import incomeAPI from "../api/income-api";
+import expenseAPI from "../api/expense-api";
+import UserExpense from "../components/modals/UserExpense";
 
 type Props = {
   setUser: Dispatch<SetStateAction<Logged | null>>;
@@ -136,9 +137,13 @@ const Budget = ({ setUser, user }: Props) => {
         const verify = await verifyUser();
         if (verify && verify.user && verify.auth === true) {
           incomeAPI.setToken(verify.user.token);
+          expenseAPI.setToken(verify.user.token);
           const allIncomes = await incomeAPI.getUserIncomes(email);
+          const allExpenses = await expenseAPI.getUserExpenses(email);
 
-          console.log("totota", allIncomes);
+          console.log("totot income", allIncomes);
+          console.log("totot expenses", allExpenses);
+
           // Transform the data to correct format and set the values to matching type
 
           const updatedIncome = allIncomes.myIncomes.reduce(
@@ -148,10 +153,23 @@ const Budget = ({ setUser, user }: Props) => {
             },
             { ...incomeValues }
           );
+          const updatedExpense = allExpenses.myExpenses.reduce(
+            (acc: ExpenseValues, expense: ExpenseValues) => {
+              acc[expense.type] += expense.value;
+              return acc;
+            },
+            { ...expenseValues }
+          );
+
           setIncomeValues((prevValues) => {
             return { ...prevValues, ...updatedIncome };
           });
+          setExpenseValues((prevValues) => {
+            return { ...prevValues, ...updatedExpense };
+          });
+
           setIncome(allIncomes.totalIncomes[0].total);
+          setExpenses(allExpenses.totalExpenses[0].total);
         }
       } catch (error) {
         console.log("myIncome error", error);
@@ -163,7 +181,7 @@ const Budget = ({ setUser, user }: Props) => {
       myIncome(user?.email);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, setIncomeValues, setIncome]);
+  }, [user, setIncomeValues, setIncome, setExpenseValues, setExpenses]);
 
   // Gets the percentages of every expense
 
@@ -216,10 +234,8 @@ const Budget = ({ setUser, user }: Props) => {
     }
   };
 
-  const handleCloseExpenses = (
-    newBalance: number,
-    expenseType: ExpenseType
-  ) => {
+  const handleCloseExpense = (newBalance: number, expenseType: ExpenseType) => {
+    console.log("hadnelClose expenses ?");
     setExpensesModalOpen(false);
     if (!isNaN(newBalance)) {
       setExpenses(expenses + newBalance);
@@ -230,12 +246,13 @@ const Budget = ({ setUser, user }: Props) => {
     }
   };
 
-  console.log("INCOMEVALUES", incomeValues);
-  if (userData.id) {
-    console.log("BUDGET USERDATA", userData);
-  }
+  // console.log("INCOMEVALUES", incomeValues);
+  // if (userData.id) {
+  //   console.log("BUDGET USERDATA", userData);
+  // }
 
-  console.log("income", income);
+  console.log("total income", income);
+  console.log("total expsnes", expenses);
   // Return
 
   if (isLoading) {
@@ -256,9 +273,10 @@ const Budget = ({ setUser, user }: Props) => {
         />
       )}
       {expensesModalOpen && (
-        <ExpensesModal
-          handleCloseExpenses={handleCloseExpenses}
+        <UserExpense
+          handleCloseExpenses={handleCloseExpense}
           setExpenses={setExpenses}
+          userData={userData}
         />
       )}
       <div className="balance">

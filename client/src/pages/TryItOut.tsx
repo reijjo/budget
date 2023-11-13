@@ -18,9 +18,9 @@ import {
   IncomeValues,
 } from "../utils/types";
 
-import IncomeModal from "../components/modals/IncomeModal";
-import ExpensesModal from "../components/modals/ExpensesModal";
-import BalanceModal from "../components/modals/BalanceModal";
+import IncomeModal from "../components/modals/try-it/IncomeModal";
+import ExpensesModal from "../components/modals/try-it/ExpensesModal";
+import BalanceModal from "../components/modals/try-it/BalanceModal";
 
 const TryItOut = () => {
   const [saldo, setSaldo] = useState<number>(0); // Current balance

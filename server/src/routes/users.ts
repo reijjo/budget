@@ -78,9 +78,8 @@ const usersRouter = new Elysia({ prefix: "/users" })
 
       const itsMe = await UserModel.findOne({ email: email })
         .select("-passwd")
-        .populate("incomes");
-      // .populate("expenses");
-      console.log("itsMe", email);
+        .populate("incomes")
+        .populate("expenses");
       set.status = 200;
       return itsMe;
     } catch (error: unknown) {

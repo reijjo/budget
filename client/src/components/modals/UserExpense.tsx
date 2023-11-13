@@ -1,15 +1,20 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { ExpenseType } from "../../utils/types";
+import { ExpenseType, UserData } from "../../utils/types";
+import expenseAPI from "../../api/expense-api";
+import { isAxiosError } from "axios";
+import { verifyUser } from "../../utils/middleware";
 
-type ExpensesModalProps = {
+type ExpenseModalProps = {
   handleCloseExpenses: (newBalance: number, expenseType: ExpenseType) => void;
   setExpenses: (value: number) => void;
+  userData: UserData | null;
 };
 
-const ExpensesModal = ({
+const UserExpense = ({
   handleCloseExpenses,
   setExpenses,
-}: ExpensesModalProps) => {
+  userData,
+}: ExpenseModalProps) => {
   const [expenseValue, setExpenseValue] = useState("");
   const [selectedButton, setSelectedButton] = useState<ExpenseType | null>(
     null
@@ -17,26 +22,59 @@ const ExpensesModal = ({
 
   // Handles the new expense
 
-  const handleExpenses = (event: FormEvent) => {
+  const handleExpenses = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!selectedButton) {
       return console.log("select a type");
     }
+    try {
+      // Checks that new expense is a number
+      const expense = parseFloat(expenseValue);
+      if (!isNaN(expense)) {
+        // New expense object
 
-    // Checks that new expense is a number
-    const expense = parseFloat(expenseValue);
-    if (!isNaN(expense)) {
-      setExpenses(expense);
+        if (userData) {
+          const newExpense = {
+            value: expense,
+            type: selectedButton,
+            userId: userData.id,
+          };
+
+          // Verify the token from localStorage
+
+          const verify = await verifyUser();
+          if (verify && verify.user && verify.auth === true) {
+            expenseAPI.setToken(verify.user.token);
+            const expenseRes = await expenseAPI.addExpense(newExpense);
+            console.log("expenseres", expenseRes.savedExpense.type);
+
+            const expenseValue = expenseRes.savedExpense.value;
+            const expenseType = expenseRes.savedIncome.type;
+            setExpenses(expenseValue);
+
+            console.log("expensevalue & type", expenseValue, expenseType);
+
+            // Closes the modal with the new added expense and expense by type
+            handleCloseExpenses(expenseValue, expenseType);
+          } else {
+            window.location.replace("/fake");
+          }
+        }
+      }
+    } catch (error: unknown) {
+      console.log("error on expense", error);
+      if (isAxiosError(error)) {
+        console.log("axios expense error", error);
+      }
     }
-
-    // Closes the modal with the new added expense
-    handleCloseExpenses(expense, selectedButton);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setExpenseValue(event.target.value);
   };
+
+  // RETURN
 
   return (
     <div className="modal">
@@ -216,4 +254,4 @@ const ExpensesModal = ({
   );
 };
 
-export default ExpensesModal;
+export default UserExpense;

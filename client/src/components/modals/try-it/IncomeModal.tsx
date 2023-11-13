@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { IncomeType, UserData } from "../../utils/types";
+import { IncomeType, UserData } from "../../../utils/types";
 // import incomeAPI from "../../api/income-api";
 // import { isAxiosError } from "axios";
 // import { verifyUser } from "../../utils/middleware";
