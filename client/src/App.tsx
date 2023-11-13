@@ -23,7 +23,7 @@ const MaybeNavbar = ({ user }: { user: Logged | null }) => {
     (location.pathname === "/" && user === null) ||
     location.pathname === "/fake";
 
-  return !isLanding ? <Navbar /> : null;
+  return !isLanding ? <Navbar user={user} /> : null;
 };
 
 const App = () => {

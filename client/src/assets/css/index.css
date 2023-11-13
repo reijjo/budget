@@ -68,6 +68,7 @@ nav {
   align-items: center;
   justify-content: center;
   transition: width 0.3s ease, height 0.3s ease;
+  background-color: var(--bg);
 }
 
 .nav-closed img {

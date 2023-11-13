@@ -27,7 +27,6 @@
 
 - TESTS!
 
-- Change chart type @media (max-width: 600)
 - email confirmation
 - forgot password
 - refresh token popup
@@ -35,5 +34,6 @@
 - more mobile
 - localstorage -> cookies
 - Chart for incomes
+- balance modal
 - sorting etc
 - Redux for not registered users (maybe)

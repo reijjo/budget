@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Logged } from "../../utils/types";
 
 import logo from "../../assets/images/moneybag2-removebg.png";
 
-const Navbar = () => {
+const Navbar = ({ user }: { user: Logged | null }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -28,27 +29,34 @@ const Navbar = () => {
             <a className="link-nostyle" onClick={() => handleNavi("/")}>
               Home
             </a>
-            <a className="link-nostyle" onClick={() => handleNavi("/budget")}>
-              My Budget
-            </a>
-            <hr
-              style={{
-                width: "80%",
-                margin: "8px 2px 16px",
-                borderTop: "1px solid var(--primary)",
-                borderLeft: "none",
-                borderRight: "none",
-                borderBottom: "1px solid var(--primary)",
-              }}
-            />
-            <a
-              className="link-logout"
-              onClick={() => {
-                window.localStorage.clear(), window.location.replace("/");
-              }}
-            >
-              Logout
-            </a>
+            {user !== null && (
+              <>
+                <a
+                  className="link-nostyle"
+                  onClick={() => handleNavi("/budget")}
+                >
+                  My Budget
+                </a>
+                <hr
+                  style={{
+                    width: "80%",
+                    margin: "8px 2px 16px",
+                    borderTop: "1px solid var(--primary)",
+                    borderLeft: "none",
+                    borderRight: "none",
+                    borderBottom: "1px solid var(--primary)",
+                  }}
+                />
+                <a
+                  className="link-logout"
+                  onClick={() => {
+                    window.localStorage.clear(), window.location.replace("/");
+                  }}
+                >
+                  Logout
+                </a>
+              </>
+            )}
           </div>
         </div>
       ) : (

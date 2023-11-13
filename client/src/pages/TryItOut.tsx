@@ -1,28 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  Colors,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  // ChartConfiguration,
-} from "chart.js";
-// import { Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  Colors,
-  CategoryScale,
-  LinearScale,
-  BarElement
-);
-
-import {
   ExpenseType,
   ExpenseValues,
   IncomeType,
@@ -164,18 +141,6 @@ const TryItOut = () => {
                 income={income}
                 expenses={expenses}
               />
-              {/* <div className="bar">
-                <Bar options={barOptions} data={barData} />
-
-                <div className="bar-label">
-                  <h3 style={{ color: "var(--primarylight)" }}>
-                    +{income.toFixed(2)} €
-                  </h3>
-                  <h3 style={{ color: "var(--secondary)" }}>
-                    -{expenses.toFixed(2)} €
-                  </h3>
-                </div>
-              </div> */}
               <BarChart
                 expenseValues={expenseValues}
                 expensePercent={expensePercent}

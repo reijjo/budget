@@ -1,18 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-// import { isAxiosError } from "axios";
-
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  Colors,
-  // ChartConfiguration,
-} from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-
-ChartJS.register(ArcElement, Tooltip, Legend, Colors);
-
 import {
   ExpenseType,
   ExpenseValues,
@@ -29,6 +15,9 @@ import UserIncome from "../components/modals/UserIncome";
 import incomeAPI from "../api/income-api";
 import expenseAPI from "../api/expense-api";
 import UserExpense from "../components/modals/UserExpense";
+import Donitsi from "../components/charts/Donitsi";
+import BarChart from "../components/charts/BarChart";
+import UserBalance from "../components/modals/UserBalance";
 
 type Props = {
   setUser: Dispatch<SetStateAction<Logged | null>>;
@@ -71,41 +60,6 @@ const Budget = ({ setUser, user }: Props) => {
     expenses: expenseValues,
   });
   const [isLoading, setIsLoading] = useState(true);
-
-  // Chart.js
-
-  const donitsidata = {
-    labels: Object.keys(expenseValues),
-    datasets: [
-      {
-        label: "% of expenses",
-        data: expensePercent,
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.5)",
-          "rgba(54, 162, 235, 0.5)",
-          "rgba(255, 206, 86, 0.5)",
-          "rgba(75, 192, 192, 0.5)",
-          "rgba(153, 102, 255, 0.5)",
-          "rgba(255, 159, 64, 0.5)",
-          "rgba(128, 0, 128, 0.5)",
-          "rgba(0, 128, 0, 0.5)",
-          "rgba(0, 0, 128, 0.5)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(128, 0, 128, 1)",
-          "rgba(0, 128, 0, 1)",
-          "rgba(0, 0, 128, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
 
   // Validate token / user
 
@@ -277,27 +231,23 @@ const Budget = ({ setUser, user }: Props) => {
       <div className="balance">
         {balanceModalOpen ? (
           <div className={`balance-modal ${balanceModalOpen ? "open" : ""}`}>
-            <BalanceModal />
+            <UserBalance />
           </div>
         ) : (
           <div className="saldo">
             <div className="income-expenses">
-              <div className="donitsi">
-                <Doughnut
-                  data={donitsidata}
-                  // options={donitsioptions}
-                  // options={{ maintainAspectRatio: true, responsive: true }}
-                />
-
-                <div className="donitsi-label">
-                  <h3 style={{ color: "var(--primarylight)" }}>
-                    +{income.toFixed(2)} €{/* {income} */}
-                  </h3>
-                  <h3 style={{ color: "var(--secondary)" }}>
-                    -{expenses.toFixed(2)} €
-                  </h3>
-                </div>
-              </div>
+              <Donitsi
+                expenseValues={expenseValues}
+                expensePercent={expensePercent}
+                income={income}
+                expenses={expenses}
+              />
+              <BarChart
+                expenseValues={expenseValues}
+                expensePercent={expensePercent}
+                income={income}
+                expenses={expenses}
+              />
             </div>
           </div>
         )}
