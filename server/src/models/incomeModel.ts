@@ -11,6 +11,10 @@ const incomeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 incomeSchema.set("toJSON", {

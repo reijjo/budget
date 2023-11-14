@@ -9,7 +9,7 @@ const setToken = (newToken: string) => {
   token = `${newToken}`;
 };
 
-// income
+// expenses
 
 const addExpense = async (newExpense: NewExpense) => {
   const config = {
@@ -19,7 +19,7 @@ const addExpense = async (newExpense: NewExpense) => {
   return res.data;
 };
 
-// income/:email
+// expenses/:email
 
 const getUserExpenses = async (email: string) => {
   const config = {
@@ -29,10 +29,22 @@ const getUserExpenses = async (email: string) => {
   return res.data;
 };
 
+// expense/s:id
+
+const deleteExpense = async (id: string) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const res = await axios.delete(`${baseUrl}/${id}`, config);
+  console.log("AXIOS DELETE res", res);
+  return res.data;
+};
+
 const expenseAPI = {
   setToken,
   addExpense,
   getUserExpenses,
+  deleteExpense,
 };
 
 export default expenseAPI;

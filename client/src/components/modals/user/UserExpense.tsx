@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { ExpenseType, UserData } from "../../utils/types";
-import expenseAPI from "../../api/expense-api";
+import { ExpenseType, UserData } from "../../../utils/types";
+import expenseAPI from "../../../api/expense-api";
 import { isAxiosError } from "axios";
-import { verifyUser } from "../../utils/middleware";
+import { verifyUser } from "../../../utils/middleware";
 
 type ExpenseModalProps = {
   handleCloseExpenses: (newBalance: number, expenseType: ExpenseType) => void;

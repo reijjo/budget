@@ -13,7 +13,6 @@ import Navbar from "./components/common/Navbar";
 import { useEffect, useState } from "react";
 import { Logged } from "./utils/types";
 import Unauthorized from "./pages/Unauthorized";
-// import { LoginCredentials } from "./utils/types";
 
 const MaybeNavbar = ({ user }: { user: Logged | null }) => {
   console.log("user NAVBAR", user);
@@ -63,7 +62,7 @@ const App = () => {
           element={<Budget setUser={setUser} user={user} />}
         />
         <Route path="/fake" element={<Unauthorized />} />
-        {/* <Route path="*" element={<ErrorPage />} /> */}
+        <Route path="*" element={<Landing setUser={setUser} />} />
       </Routes>
     </Router>
   );

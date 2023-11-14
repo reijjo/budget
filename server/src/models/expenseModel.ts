@@ -1,22 +1,6 @@
 import mongoose from "mongoose";
 import { ExpenseType } from "../utils/types";
 
-// const expenseSchema = new mongoose.Schema({
-//   rent: Number,
-//   bills: Number,
-//   shopping: Number,
-//   savings: Number,
-//   restaurant: Number,
-//   pets: Number,
-//   transport: Number,
-//   food: Number,
-//   other: Number,
-//   user: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "UserModel",
-//   },
-// });
-
 const expenseSchema = new mongoose.Schema({
   value: Number,
   type: {
@@ -26,6 +10,10 @@ const expenseSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 

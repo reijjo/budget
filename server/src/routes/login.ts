@@ -44,7 +44,7 @@ const loginRouter = new Elysia({ prefix: "/login" })
 
       const user = await UserModel.findOne({ email });
 
-      console.log("user", user);
+      // console.log("user", user);
 
       if (user && user.passwd) {
         const okPasswd = await bcrypt.compare(passwd, user.passwd);

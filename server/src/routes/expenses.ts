@@ -10,7 +10,7 @@ const expenseRouter = new Elysia({ prefix: "/expenses" })
 
   .get("/", async () => {
     const expenses = await ExpenseModel.find({}).populate("user", { email: 1 });
-    console.log("expenses", expenses);
+    // console.log("expenses", expenses);
     return expenses;
   })
 
@@ -21,7 +21,7 @@ const expenseRouter = new Elysia({ prefix: "/expenses" })
       // Check that the token is valid
       const validateUser = await validUser(request, { status: 200 });
       if (validateUser) {
-        console.log("expense", expense.userId);
+        // console.log("expense", expense.userId);
 
         const getUser = await UserModel.findById(expense.userId);
         if (!getUser) {
@@ -38,7 +38,7 @@ const expenseRouter = new Elysia({ prefix: "/expenses" })
         const savedExpense = await addMoney.save();
         getUser.expenses = getUser.expenses.concat(savedExpense._id);
         await getUser.save();
-        console.log("svadeExpense", savedExpense);
+        // console.log("svadeExpense", savedExpense);
 
         set.status = 201;
         return {
@@ -96,6 +96,39 @@ const expenseRouter = new Elysia({ prefix: "/expenses" })
       }
     } catch (error: unknown) {
       console.log("expenses/email error", error);
+      set.status = 500;
+    }
+  })
+
+  .delete("/:id", async ({ params, request, set }) => {
+    try {
+      const id = params.id;
+
+      // Check that the token is valid
+
+      const validateUser = await validUser(request, { status: 200 });
+      console.log("validateUser", validateUser.validUser?._id);
+      if (validateUser) {
+        const toDelete = await ExpenseModel.findById(id);
+
+        // Check that the user deletes own expense
+        if (
+          validateUser.validUser?._id.toString() === toDelete?.user?.toString()
+        ) {
+          console.log("jee on sama");
+          await ExpenseModel.findByIdAndDelete(id);
+          set.status = 204;
+          return { message: "Item deleted." };
+        } else {
+          set.status = 401;
+          return { error: "You can't remove this item." };
+        }
+      } else {
+        set.status = 404;
+        return { message: "User not found" };
+      }
+    } catch (error: unknown) {
+      console.log("expenses/id error", error);
       set.status = 500;
     }
   });

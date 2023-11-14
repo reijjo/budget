@@ -27,13 +27,14 @@
 
 - TESTS!
 
+- empty income/expense = error
 - email confirmation
 - forgot password
 - refresh token popup
-- fresher isLoading & 403page
-- more mobile
+- charts loading too fast
+
 - localstorage -> cookies
 - Chart for incomes
-- balance modal
+- more mobile
 - sorting etc
 - Redux for not registered users (maybe)

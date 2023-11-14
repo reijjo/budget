@@ -10,13 +10,14 @@ import {
 
 import { verifyUser } from "../utils/middleware";
 import userAPI from "../api/users-api";
-import UserIncome from "../components/modals/UserIncome";
+import UserIncome from "../components/modals/user/UserIncome";
 import incomeAPI from "../api/income-api";
 import expenseAPI from "../api/expense-api";
-import UserExpense from "../components/modals/UserExpense";
+import UserExpense from "../components/modals/user/UserExpense";
 import Donitsi from "../components/charts/Donitsi";
 import BarChart from "../components/charts/BarChart";
-import UserBalance from "../components/modals/UserBalance";
+import UserBalance from "../components/modals/user/UserBalance";
+import Loading from "../components/common/Loading";
 
 type Props = {
   setUser: Dispatch<SetStateAction<Logged | null>>;
@@ -50,8 +51,6 @@ const Budget = ({ setUser, user }: Props) => {
   const [expensesModalOpen, setExpensesModalOpen] = useState(false);
   const [balanceModalOpen, setBalanceModalOpen] = useState(false);
   const [expensePercent, setExpensePercent] = useState<number[]>([]);
-  // const [checkExpenses, setCheckExpenses] = useState(true)
-  // const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<UserData>({
     id: "",
     email: "",
@@ -59,6 +58,8 @@ const Budget = ({ setUser, user }: Props) => {
     expenses: expenseValues,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [incomesArray, setIncomesArray] = useState<IncomeValues[]>([]);
+  const [expensesArray, setExpensesArray] = useState<ExpenseValues[]>([]);
 
   // Validate token / user
 
@@ -94,15 +95,29 @@ const Budget = ({ setUser, user }: Props) => {
           const allIncomes = await incomeAPI.getUserIncomes(email);
           const allExpenses = await expenseAPI.getUserExpenses(email);
 
+          setIncomesArray(allIncomes.myIncomes);
+          setExpensesArray(allExpenses.myExpenses);
+
           // Transform the data to correct format and set the values to matching type
 
-          const updatedIncome = allIncomes.myIncomes.reduce(
+          // if (incomesArray.length > 0) {
+          const updatedIncome = await allIncomes.myIncomes.reduce(
             (acc: IncomeValues, income: IncomeValues) => {
               acc[income.type] += income.value;
               return acc;
             },
             { ...incomeValues }
           );
+
+          setIncomeValues((prevValues) => {
+            return { ...prevValues, ...updatedIncome };
+          });
+
+          // setIncome(incomesArray[0].total);
+          setIncome(allIncomes.totalIncomes[0].total);
+          // }
+
+          // if (expensesArray.length > 0) {
           const updatedExpense = allExpenses.myExpenses.reduce(
             (acc: ExpenseValues, expense: ExpenseValues) => {
               acc[expense.type] += expense.value;
@@ -111,27 +126,38 @@ const Budget = ({ setUser, user }: Props) => {
             { ...expenseValues }
           );
 
-          setIncomeValues((prevValues) => {
-            return { ...prevValues, ...updatedIncome };
-          });
           setExpenseValues((prevValues) => {
             return { ...prevValues, ...updatedExpense };
           });
 
-          setIncome(allIncomes.totalIncomes[0].total);
+          // setExpenses(expensesArray[0].total);
           setExpenses(allExpenses.totalExpenses[0].total);
+          // }
         }
       } catch (error) {
         console.log("myIncome error", error);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
     };
     if (user !== null) {
       myIncome(user?.email);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, setIncomeValues, setIncome, setExpenseValues, setExpenses]);
+  }, [
+    user,
+    setIncomeValues,
+    setIncome,
+    setExpenseValues,
+    setExpenses,
+    balanceModalOpen,
+    income,
+    expenses,
+  ]);
+
+  // console.log("balancemodal open", balanceModalOpen);
 
   // Gets the percentages of every expense
 
@@ -146,7 +172,7 @@ const Budget = ({ setUser, user }: Props) => {
     );
 
     setExpensePercent(percentages);
-  }, [expenseValues]);
+  }, [expenseValues, expenses]);
 
   // Change the current balance everytime the income or expenses change
 
@@ -199,16 +225,10 @@ const Budget = ({ setUser, user }: Props) => {
     }
   };
 
-  // console.log("expenseValues", expenseValues);
-
   // Return
 
   if (isLoading) {
-    return (
-      <>
-        <h1>loading...</h1>
-      </>
-    );
+    return <Loading />;
   }
 
   return (
@@ -230,7 +250,13 @@ const Budget = ({ setUser, user }: Props) => {
       <div className="balance">
         {balanceModalOpen ? (
           <div className={`balance-modal ${balanceModalOpen ? "open" : ""}`}>
-            <UserBalance setBalanceModalOpen={setBalanceModalOpen} />
+            <UserBalance
+              setBalanceModalOpen={setBalanceModalOpen}
+              incomesArray={incomesArray}
+              setIncomesArray={setIncomesArray}
+              expensesArray={expensesArray}
+              setExpensesArray={setExpensesArray}
+            />
           </div>
         ) : (
           <div className="saldo">
