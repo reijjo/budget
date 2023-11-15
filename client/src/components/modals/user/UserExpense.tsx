@@ -9,6 +9,7 @@ import { ExpenseType, UserData, ExpenseValues } from "../../../utils/types";
 import expenseAPI from "../../../api/expense-api";
 import { isAxiosError } from "axios";
 import { verifyUser } from "../../../utils/middleware";
+import { nullValuesExpense } from "../../../utils/valueHelp";
 
 type ExpenseModalProps = {
   handleCloseExpenses: (newBalance: number, expenseType: ExpenseType) => void;
@@ -33,17 +34,6 @@ const UserExpense = ({
   const [selectedButton, setSelectedButton] = useState<ExpenseType | null>(
     null
   );
-  const nullValues = {
-    Rent: 0,
-    Bills: 0,
-    Shopping: 0,
-    Savings: 0,
-    Restaurant: 0,
-    Pets: 0,
-    Transport: 0,
-    Food: 0,
-    Other: 0,
-  };
 
   // Handles the new expense
 
@@ -85,7 +75,7 @@ const UserExpense = ({
                 acc[expense.type] += expense.value;
                 return acc;
               },
-              { ...nullValues }
+              { ...nullValuesExpense }
             );
 
             setExpenseValues(updatedExpense);

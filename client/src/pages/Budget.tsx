@@ -9,7 +9,9 @@ import {
 } from "../utils/types";
 
 import { verifyUser } from "../utils/middleware";
+import { nullValuesExpense } from "../utils/valueHelp";
 import userAPI from "../api/users-api";
+
 import UserIncome from "../components/modals/user/UserIncome";
 import incomeAPI from "../api/income-api";
 import expenseAPI from "../api/expense-api";
@@ -60,17 +62,6 @@ const Budget = ({ setUser, user }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [incomesArray, setIncomesArray] = useState<IncomeValues[]>([]);
   const [expensesArray, setExpensesArray] = useState<ExpenseValues[]>([]);
-  const nullValues = {
-    Rent: 0,
-    Bills: 0,
-    Shopping: 0,
-    Savings: 0,
-    Restaurant: 0,
-    Pets: 0,
-    Transport: 0,
-    Food: 0,
-    Other: 0,
-  };
 
   // Validate token / user
 
@@ -96,7 +87,7 @@ const Budget = ({ setUser, user }: Props) => {
 
   useEffect(() => {
     const myIncome = async (email: string) => {
-      setExpenseValues(nullValues);
+      setExpenseValues(nullValuesExpense);
 
       try {
         // Verify user first
@@ -136,19 +127,9 @@ const Budget = ({ setUser, user }: Props) => {
                 acc[expense.type] += expense.value;
                 return acc;
               },
-              { ...nullValues }
+              { ...nullValuesExpense }
             );
 
-            // console.log(
-            //   "AFTER updatedExpense",
-            //   expenseValues,
-            //   "expenses",
-            //   expenses
-            // );
-
-            // setExpenseValues((prevValues) => {
-            //   return { ...prevValues, ...updatedExpense };
-            // });
             setExpenseValues(updatedExpense);
             setExpenses(allExpenses.totalExpenses[0].total);
           } else {

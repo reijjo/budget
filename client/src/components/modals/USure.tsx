@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ExpenseValues, IncomeValues } from "../../utils/types";
 import expenseAPI from "../../api/expense-api";
 import { verifyUser } from "../../utils/middleware";
+import { nullValuesExpense } from "../../utils/valueHelp";
 
 type sureProps = {
   setYouSure: Dispatch<SetStateAction<boolean>>;
@@ -24,17 +25,6 @@ const USure = ({
   expenses,
   setExpenseValues,
 }: sureProps) => {
-  const nullValues = {
-    Rent: 0,
-    Bills: 0,
-    Shopping: 0,
-    Savings: 0,
-    Restaurant: 0,
-    Pets: 0,
-    Transport: 0,
-    Food: 0,
-    Other: 0,
-  };
   // console.log('USure expenseValues', expenseValues)
 
   // Finish delete
@@ -55,14 +45,14 @@ const USure = ({
         const updatedArray = expensesArray.filter(
           (expense) => String(expense.id) !== String(id)
         );
-        setExpenseValues(nullValues);
+        setExpenseValues(nullValuesExpense);
 
         const updatedExpense = expensesArray.reduce(
           (acc: ExpenseValues, expense: ExpenseValues) => {
             acc[expense.type] += expense.value;
             return acc;
           },
-          { ...nullValues }
+          { ...nullValuesExpense }
         );
 
         console.log("updated", updatedArray);
@@ -86,28 +76,28 @@ const USure = ({
       </div>
       <div>
         <button
-          className="my-btn filled-btn"
+          className="my-btn outline-btn"
           style={{
             padding: "8px 16px",
             fontSize: "0.9rem",
             width: "calc(50% - 8px)",
             marginRight: "8px",
           }}
-          onClick={() => removeItem(String(itemToDelete?.id), whatType)}
+          onClick={() => setYouSure(false)}
         >
-          Delete
+          Cancel
         </button>
         <button
-          className="my-btn outline-btn"
+          className="my-btn filled-btn"
           style={{
             padding: "8px 16px",
             fontSize: "0.9rem",
             width: "calc(50% - 8px)",
             marginLeft: "8px",
           }}
-          onClick={() => setYouSure(false)}
+          onClick={() => removeItem(String(itemToDelete?.id), whatType)}
         >
-          Cancel
+          Delete
         </button>
       </div>
     </div>
