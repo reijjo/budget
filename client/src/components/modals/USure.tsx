@@ -2,17 +2,25 @@ import { Dispatch, SetStateAction } from "react";
 import { ExpenseValues, IncomeValues } from "../../utils/types";
 import expenseAPI from "../../api/expense-api";
 import { verifyUser } from "../../utils/middleware";
-import { nullValuesExpense } from "../../utils/valueHelp";
+import { nullValuesExpense, nullValuesIncome } from "../../utils/valueHelp";
+import incomeAPI from "../../api/income-api";
 
 type sureProps = {
   setYouSure: Dispatch<SetStateAction<boolean>>;
   setExpensesArray: Dispatch<SetStateAction<ExpenseValues[]>>;
+  setIncomesArray: Dispatch<SetStateAction<IncomeValues[]>>;
   expensesArray: ExpenseValues[];
+  incomesArray: IncomeValues[];
   itemToDelete: IncomeValues | ExpenseValues | null;
   whatType: string;
+
   setExpenses: Dispatch<SetStateAction<number>>;
   expenses: number;
   setExpenseValues: Dispatch<SetStateAction<ExpenseValues>>;
+
+  setIncome: Dispatch<SetStateAction<number>>;
+  income: number;
+  setIncomeValues: Dispatch<SetStateAction<IncomeValues>>;
 };
 
 const USure = ({
@@ -24,6 +32,12 @@ const USure = ({
   setExpenses,
   expenses,
   setExpenseValues,
+
+  setIncomesArray,
+  incomesArray,
+  setIncome,
+  income,
+  setIncomeValues,
 }: sureProps) => {
   // console.log('USure expenseValues', expenseValues)
 
@@ -31,7 +45,32 @@ const USure = ({
 
   const removeItem = async (id: string, what: string) => {
     if (what === "income") {
-      console.log("incomeID", id);
+      const verify = await verifyUser();
+      if (verify && verify.user && verify.auth === true) {
+        // Verify and delete
+        incomeAPI.setToken(verify.user.token);
+        const deletedIncome = await incomeAPI.deleteIncome(id);
+
+        // Set income array without the deleted item
+        const updatedArray = incomesArray.filter(
+          (expense) => String(expense.id) !== String(id)
+        );
+        setIncomeValues(nullValuesIncome);
+
+        const updatedIncome = incomesArray.reduce(
+          (acc: IncomeValues, expense: IncomeValues) => {
+            acc[expense.type] += expense.value;
+            return acc;
+          },
+          { ...nullValuesIncome }
+        );
+
+        console.log("updated", updatedArray);
+        setIncomeValues(updatedIncome);
+        setIncomesArray(updatedArray);
+        setIncome(income - deletedIncome.value);
+        setYouSure(false);
+      }
     } else if (what === "expense") {
       const verify = await verifyUser();
 

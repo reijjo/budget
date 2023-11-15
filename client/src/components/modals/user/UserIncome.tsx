@@ -1,19 +1,34 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { IncomeType, UserData } from "../../../utils/types";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react";
+import { IncomeType, IncomeValues, UserData } from "../../../utils/types";
 import incomeAPI from "../../../api/income-api";
 import { isAxiosError } from "axios";
 import { verifyUser } from "../../../utils/middleware";
+import { nullValuesIncome } from "../../../utils/valueHelp";
 
 type IncomeModalProps = {
   handleCloseIncome: (newBalance: number, incomeType: IncomeType) => void;
   setIncome: (value: number) => void;
   userData: UserData | null;
+  setIncomesArray: Dispatch<SetStateAction<IncomeValues[]>>;
+  incomesArray: IncomeValues[];
+  setIncomeValues: Dispatch<SetStateAction<IncomeValues>>;
+  income: number;
 };
 
 const UserIncome = ({
   handleCloseIncome,
   setIncome,
   userData,
+  setIncomesArray,
+  incomesArray,
+  setIncomeValues,
+  income,
 }: IncomeModalProps) => {
   const [incomeValue, setIncomeValue] = useState("");
   const [selectedButton, setSelectedButton] = useState<IncomeType | null>(null);
@@ -28,13 +43,13 @@ const UserIncome = ({
     }
     try {
       // Checks that new income is a number
-      const income = parseFloat(incomeValue);
-      if (!isNaN(income)) {
+      const addIncome = parseFloat(incomeValue);
+      if (!isNaN(addIncome)) {
         // NewIncome object
 
         if (userData) {
           const newIncome = {
-            value: income,
+            value: addIncome,
             type: selectedButton,
             userId: userData.id,
           };
@@ -45,11 +60,23 @@ const UserIncome = ({
           if (verify && verify.user && verify.auth === true) {
             incomeAPI.setToken(verify.user.token);
             const incomeRes = await incomeAPI.addIncome(newIncome);
-            console.log("incomeres", incomeRes);
 
             const incomeValue = incomeRes.savedIncome.value;
             const incomeType = incomeRes.savedIncome.type;
-            setIncome(incomeValue);
+
+            const updatedArray = incomesArray.concat(incomeRes.savedIncome);
+
+            const updatedIncome = incomesArray.reduce(
+              (acc: IncomeValues, income: IncomeValues) => {
+                acc[income.type] += income.value;
+                return acc;
+              },
+              { ...nullValuesIncome }
+            );
+
+            setIncomeValues(updatedIncome);
+            setIncomesArray(updatedArray);
+            setIncome(income + incomeValue);
 
             // Closes the modal with the new added income and income by type
 

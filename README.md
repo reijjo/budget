@@ -27,12 +27,11 @@
 
 - TESTS!
 
-- empty income/expense = error
 - email confirmation
 - forgot password
 - refresh token popup
-- charts loading too fast
-- type for deleting item
+- userbalance&user WhatType
+- security
 
 - localstorage -> cookies
 - Chart for incomes

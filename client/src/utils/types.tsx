@@ -95,3 +95,8 @@ export type UserData = {
   incomes: IncomeValues;
   expenses: ExpenseValues;
 };
+
+export enum WhatType {
+  Income = "income",
+  Expense = "expense",
+}

@@ -9,7 +9,7 @@ import {
 } from "../utils/types";
 
 import { verifyUser } from "../utils/middleware";
-import { nullValuesExpense } from "../utils/valueHelp";
+import { nullValuesExpense, nullValuesIncome } from "../utils/valueHelp";
 import userAPI from "../api/users-api";
 
 import UserIncome from "../components/modals/user/UserIncome";
@@ -88,6 +88,7 @@ const Budget = ({ setUser, user }: Props) => {
   useEffect(() => {
     const myIncome = async (email: string) => {
       setExpenseValues(nullValuesExpense);
+      setIncomeValues(nullValuesIncome);
 
       try {
         // Verify user first
@@ -103,23 +104,30 @@ const Budget = ({ setUser, user }: Props) => {
           setExpensesArray(allExpenses.myExpenses);
 
           // Transform the data to correct format and set the values to matching type
+          // Incomes
 
-          // if (incomesArray.length > 0) {
-          const updatedIncome = await allIncomes.myIncomes.reduce(
-            (acc: IncomeValues, income: IncomeValues) => {
-              acc[income.type] += income.value;
-              return acc;
-            },
-            { ...incomeValues }
-          );
+          if (incomesArray.length > 0) {
+            const updatedIncome = incomesArray.reduce(
+              (acc: IncomeValues, income: IncomeValues) => {
+                acc[income.type] += income.value;
+                return acc;
+              },
+              { ...nullValuesIncome }
+            );
 
-          setIncomeValues((prevValues) => {
-            return { ...prevValues, ...updatedIncome };
-          });
+            // setIncomeValues((prevValues) => {
+            //   return { ...prevValues, ...updatedIncome };
+            // });
 
-          // setIncome(incomesArray[0].total);
-          setIncome(allIncomes.totalIncomes[0].total);
-          // }
+            // setIncome(incomesArray[0].total);
+            setIncomeValues(updatedIncome);
+            setIncome(allIncomes.totalIncomes[0].total);
+          } else {
+            setIncomeValues(incomeValues);
+            setIncome(income);
+          }
+
+          // Expenses
 
           if (expensesArray.length > 0) {
             const updatedExpense = expensesArray.reduce(
@@ -202,7 +210,6 @@ const Budget = ({ setUser, user }: Props) => {
   // Closes the income / expenses modal and sets the new balance
 
   const handleCloseIncome = (newBalance: number, incomeType: IncomeType) => {
-    setIncomeModalOpen(false);
     if (!isNaN(newBalance)) {
       setIncome(income + newBalance); // Sets the total incomes
       setIncomeValues((prev) => ({
@@ -211,6 +218,7 @@ const Budget = ({ setUser, user }: Props) => {
         [incomeType]: prev[incomeType] + newBalance,
       }));
     }
+    setIncomeModalOpen(false);
   };
 
   const handleCloseExpenses = (
@@ -246,6 +254,10 @@ const Budget = ({ setUser, user }: Props) => {
           handleCloseIncome={handleCloseIncome}
           setIncome={setIncome}
           userData={userData}
+          setIncomesArray={setIncomesArray}
+          incomesArray={incomesArray}
+          setIncomeValues={setIncomeValues}
+          income={income}
         />
       )}
       {expensesModalOpen && (
@@ -266,6 +278,9 @@ const Budget = ({ setUser, user }: Props) => {
               setBalanceModalOpen={setBalanceModalOpen}
               incomesArray={incomesArray}
               setIncomesArray={setIncomesArray}
+              setIncome={setIncome}
+              income={income}
+              setIncomeValues={setIncomeValues}
               expensesArray={expensesArray}
               setExpensesArray={setExpensesArray}
               setExpenses={setExpenses}

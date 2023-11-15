@@ -93,6 +93,41 @@ const incomeRouter = new Elysia({ prefix: "/incomes" })
       console.log("incomes/email error", error);
       set.status = 500;
     }
+  })
+
+  .delete("/:id", async ({ params, request, set }) => {
+    try {
+      const id = params.id;
+
+      // Check that token is valid
+
+      const validateUser = await validUser(request, { status: 200 });
+      console.log("validateUser", validateUser.validUser?._id);
+      if (validateUser) {
+        const toDelete = await IncomeModel.findById(id);
+
+        const deletedValue = toDelete?.value;
+
+        // Check that the user deletes own expense
+        if (
+          validateUser.validUser?._id.toString() === toDelete?.user?.toString()
+        ) {
+          await IncomeModel.findByIdAndDelete(id);
+          set.status = 200;
+
+          return { message: "Item deleted.", value: deletedValue };
+        } else {
+          set.status = 401;
+          return { error: "You can't remove this item." };
+        }
+      } else {
+        set.status = 404;
+        return { message: "User not found" };
+      }
+    } catch (error: unknown) {
+      console.log("incomes/id error", error);
+      set.status = 500;
+    }
   });
 
 export { incomeRouter };

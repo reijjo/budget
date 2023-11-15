@@ -7,6 +7,9 @@ type Props = {
   setBalanceModalOpen: Dispatch<SetStateAction<boolean>>;
   incomesArray: IncomeValues[];
   setIncomesArray: Dispatch<SetStateAction<IncomeValues[]>>;
+  setIncome: Dispatch<SetStateAction<number>>;
+  income: number;
+  setIncomeValues: Dispatch<SetStateAction<IncomeValues>>;
   expensesArray: ExpenseValues[];
   setExpensesArray: Dispatch<SetStateAction<ExpenseValues[]>>;
   setExpenses: Dispatch<SetStateAction<number>>;
@@ -17,6 +20,10 @@ type Props = {
 const UserBalance = ({
   setBalanceModalOpen,
   incomesArray,
+  setIncomesArray,
+  setIncome,
+  income,
+  setIncomeValues,
   expensesArray,
   setExpensesArray,
   setExpenses,
@@ -30,16 +37,12 @@ const UserBalance = ({
   const [whatType, setWhatType] = useState("");
 
   const deleteIncome = (income: IncomeValues) => {
-    setYouSure(true);
     setItemToDelete(income);
     setWhatType("income");
-    console.log("Income ID", income);
+    setYouSure(true);
   };
 
   const deleteExpense = (expense: ExpenseValues) => {
-    // const expenseValues = {}
-    // const updatedExpense = expensesArray.filter((item) => item.id !== expense.id)
-
     setItemToDelete(expense);
     setWhatType("expense");
     setYouSure(true);
@@ -64,6 +67,11 @@ const UserBalance = ({
           setExpenses={setExpenses}
           expenses={expenses}
           setExpenseValues={setExpenseValues}
+          setIncomesArray={setIncomesArray}
+          incomesArray={incomesArray}
+          setIncome={setIncome}
+          income={income}
+          setIncomeValues={setIncomeValues}
         />
       )}
 

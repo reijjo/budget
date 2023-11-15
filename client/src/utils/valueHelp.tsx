@@ -9,3 +9,10 @@ export const nullValuesExpense = {
   Food: 0,
   Other: 0,
 };
+
+export const nullValuesIncome = {
+  Salary: 0,
+  Kela: 0,
+  Savings: 0,
+  Other: 0,
+};

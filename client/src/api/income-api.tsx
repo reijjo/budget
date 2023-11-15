@@ -29,10 +29,21 @@ const getUserIncomes = async (email: string) => {
   return res.data;
 };
 
+// incomes/:id
+
+const deleteIncome = async (id: string) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const res = await axios.delete(`${baseUrl}/${id}`, config);
+  return res.data;
+};
+
 const incomeAPI = {
   setToken,
   addIncome,
   getUserIncomes,
+  deleteIncome,
 };
 
 export default incomeAPI;
