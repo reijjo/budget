@@ -1,5 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { ExpenseType, UserData } from "../../../utils/types";
+import {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { ExpenseType, UserData, ExpenseValues } from "../../../utils/types";
 import expenseAPI from "../../../api/expense-api";
 import { isAxiosError } from "axios";
 import { verifyUser } from "../../../utils/middleware";
@@ -8,17 +14,36 @@ type ExpenseModalProps = {
   handleCloseExpenses: (newBalance: number, expenseType: ExpenseType) => void;
   setExpenses: (value: number) => void;
   userData: UserData | null;
+  setExpensesArray: Dispatch<SetStateAction<ExpenseValues[]>>;
+  expensesArray: ExpenseValues[];
+  setExpenseValues: Dispatch<SetStateAction<ExpenseValues>>;
+  expenses: number;
 };
 
 const UserExpense = ({
   handleCloseExpenses,
   setExpenses,
   userData,
+  setExpensesArray,
+  expensesArray,
+  setExpenseValues,
+  expenses,
 }: ExpenseModalProps) => {
   const [expenseValue, setExpenseValue] = useState("");
   const [selectedButton, setSelectedButton] = useState<ExpenseType | null>(
     null
   );
+  const nullValues = {
+    Rent: 0,
+    Bills: 0,
+    Shopping: 0,
+    Savings: 0,
+    Restaurant: 0,
+    Pets: 0,
+    Transport: 0,
+    Food: 0,
+    Other: 0,
+  };
 
   // Handles the new expense
 
@@ -51,10 +76,24 @@ const UserExpense = ({
             const expenseValue = expenseRes.savedExpense.value;
             const expenseType = expenseRes.savedExpense.type;
 
-            // console.log("expense.type", expenseType);
-            setExpenses(expenseValue);
+            console.log("expensesRes", expenseRes);
+
+            const updatedArray = expensesArray.concat(expenseRes.savedExpense);
+
+            const updatedExpense = expensesArray.reduce(
+              (acc: ExpenseValues, expense: ExpenseValues) => {
+                acc[expense.type] += expense.value;
+                return acc;
+              },
+              { ...nullValues }
+            );
+
+            setExpenseValues(updatedExpense);
+            setExpensesArray(updatedArray);
+            setExpenses(expenses + expenseValue);
 
             console.log("expensevalue & type", expenseValue, expenseType);
+            console.log("expence array", expensesArray);
 
             // Closes the modal with the new added expense and expense by type
             handleCloseExpenses(expenseValue, expenseType);

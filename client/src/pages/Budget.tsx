@@ -167,7 +167,6 @@ const Budget = ({ setUser, user }: Props) => {
     };
     if (user !== null) {
       myIncome(user?.email);
-      console.log("LATAATKO KAIKEN>>??");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -273,6 +272,10 @@ const Budget = ({ setUser, user }: Props) => {
           handleCloseExpenses={handleCloseExpenses}
           setExpenses={setExpenses}
           userData={userData}
+          setExpensesArray={setExpensesArray}
+          expensesArray={expensesArray}
+          setExpenseValues={setExpenseValues}
+          expenses={expenses}
         />
       )}
       <div className="balance">
