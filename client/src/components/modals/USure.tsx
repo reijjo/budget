@@ -7,9 +7,11 @@ type sureProps = {
   setYouSure: Dispatch<SetStateAction<boolean>>;
   setExpensesArray: Dispatch<SetStateAction<ExpenseValues[]>>;
   expensesArray: ExpenseValues[];
-
   itemToDelete: IncomeValues | ExpenseValues | null;
   whatType: string;
+  setExpenses: Dispatch<SetStateAction<number>>;
+  expenses: number;
+  setExpenseValues: Dispatch<SetStateAction<ExpenseValues>>;
 };
 
 const USure = ({
@@ -18,7 +20,23 @@ const USure = ({
   whatType,
   setExpensesArray,
   expensesArray,
+  setExpenses,
+  expenses,
+  setExpenseValues,
 }: sureProps) => {
+  const nullValues = {
+    Rent: 0,
+    Bills: 0,
+    Shopping: 0,
+    Savings: 0,
+    Restaurant: 0,
+    Pets: 0,
+    Transport: 0,
+    Food: 0,
+    Other: 0,
+  };
+  // console.log('USure expenseValues', expenseValues)
+
   // Finish delete
 
   const removeItem = async (id: string, what: string) => {
@@ -31,16 +49,26 @@ const USure = ({
         // Verify and delete
 
         expenseAPI.setToken(verify.user.token);
-        await expenseAPI.deleteExpense(id);
+        const deletedExpense = await expenseAPI.deleteExpense(id);
 
         // Set expense array without the deleted item
-        console.log("expedesesarra", expensesArray);
         const updatedArray = expensesArray.filter(
           (expense) => String(expense.id) !== String(id)
         );
-        console.log("updated", updatedArray);
-        setExpensesArray(updatedArray);
+        setExpenseValues(nullValues);
 
+        const updatedExpense = expensesArray.reduce(
+          (acc: ExpenseValues, expense: ExpenseValues) => {
+            acc[expense.type] += expense.value;
+            return acc;
+          },
+          { ...nullValues }
+        );
+
+        console.log("updated", updatedArray);
+        setExpenseValues(updatedExpense);
+        setExpensesArray(updatedArray);
+        setExpenses(expenses - deletedExpense.value);
         setYouSure(false);
       } else {
         window.location.replace("/fake");

@@ -47,12 +47,11 @@ const UserExpense = ({
           if (verify && verify.user && verify.auth === true) {
             expenseAPI.setToken(verify.user.token);
             const expenseRes = await expenseAPI.addExpense(newExpense);
-            console.log("expenseres", expenseRes.savedExpense);
 
             const expenseValue = expenseRes.savedExpense.value;
             const expenseType = expenseRes.savedExpense.type;
 
-            console.log("expense.type", expenseType);
+            // console.log("expense.type", expenseType);
             setExpenses(expenseValue);
 
             console.log("expensevalue & type", expenseValue, expenseType);

@@ -9,6 +9,9 @@ type Props = {
   setIncomesArray: Dispatch<SetStateAction<IncomeValues[]>>;
   expensesArray: ExpenseValues[];
   setExpensesArray: Dispatch<SetStateAction<ExpenseValues[]>>;
+  setExpenses: Dispatch<SetStateAction<number>>;
+  expenses: number;
+  setExpenseValues: Dispatch<SetStateAction<ExpenseValues>>;
 };
 
 const UserBalance = ({
@@ -16,6 +19,9 @@ const UserBalance = ({
   incomesArray,
   expensesArray,
   setExpensesArray,
+  setExpenses,
+  expenses,
+  setExpenseValues,
 }: Props) => {
   const [youSure, setYouSure] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<
@@ -31,14 +37,16 @@ const UserBalance = ({
   };
 
   const deleteExpense = (expense: ExpenseValues) => {
-    setYouSure(true);
+    // const expenseValues = {}
+    // const updatedExpense = expensesArray.filter((item) => item.id !== expense.id)
+
     setItemToDelete(expense);
     setWhatType("expense");
-
-    console.log("Expense ID", expense);
+    setYouSure(true);
   };
 
-  console.log("youSure??", youSure);
+  // console.log("youSure??", youSure);
+  // console.log('Balance expenseValues', expenseValues)
 
   // RETURN
 
@@ -53,6 +61,9 @@ const UserBalance = ({
           whatType={whatType}
           setExpensesArray={setExpensesArray}
           expensesArray={expensesArray}
+          setExpenses={setExpenses}
+          expenses={expenses}
+          setExpenseValues={setExpenseValues}
         />
       )}
 

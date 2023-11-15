@@ -60,6 +60,17 @@ const Budget = ({ setUser, user }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [incomesArray, setIncomesArray] = useState<IncomeValues[]>([]);
   const [expensesArray, setExpensesArray] = useState<ExpenseValues[]>([]);
+  const nullValues = {
+    Rent: 0,
+    Bills: 0,
+    Shopping: 0,
+    Savings: 0,
+    Restaurant: 0,
+    Pets: 0,
+    Transport: 0,
+    Food: 0,
+    Other: 0,
+  };
 
   // Validate token / user
 
@@ -85,6 +96,8 @@ const Budget = ({ setUser, user }: Props) => {
 
   useEffect(() => {
     const myIncome = async (email: string) => {
+      setExpenseValues(nullValues);
+
       try {
         // Verify user first
 
@@ -117,22 +130,32 @@ const Budget = ({ setUser, user }: Props) => {
           setIncome(allIncomes.totalIncomes[0].total);
           // }
 
-          // if (expensesArray.length > 0) {
-          const updatedExpense = allExpenses.myExpenses.reduce(
-            (acc: ExpenseValues, expense: ExpenseValues) => {
-              acc[expense.type] += expense.value;
-              return acc;
-            },
-            { ...expenseValues }
-          );
+          if (expensesArray.length > 0) {
+            const updatedExpense = expensesArray.reduce(
+              (acc: ExpenseValues, expense: ExpenseValues) => {
+                acc[expense.type] += expense.value;
+                return acc;
+              },
+              { ...nullValues }
+            );
 
-          setExpenseValues((prevValues) => {
-            return { ...prevValues, ...updatedExpense };
-          });
+            // console.log(
+            //   "AFTER updatedExpense",
+            //   expenseValues,
+            //   "expenses",
+            //   expenses
+            // );
 
-          // setExpenses(expensesArray[0].total);
-          setExpenses(allExpenses.totalExpenses[0].total);
-          // }
+            // setExpenseValues((prevValues) => {
+            //   return { ...prevValues, ...updatedExpense };
+            // });
+            setExpenseValues(updatedExpense);
+            setExpenses(allExpenses.totalExpenses[0].total);
+          } else {
+            setExpenseValues(expenseValues);
+            setExpenses(expenses);
+          }
+          // console.log("expenseVALUES BUDGET", expenseValues);
         }
       } catch (error) {
         console.log("myIncome error", error);
@@ -144,6 +167,7 @@ const Budget = ({ setUser, user }: Props) => {
     };
     if (user !== null) {
       myIncome(user?.email);
+      console.log("LATAATKO KAIKEN>>??");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -157,8 +181,6 @@ const Budget = ({ setUser, user }: Props) => {
     expenses,
   ]);
 
-  // console.log("balancemodal open", balanceModalOpen);
-
   // Gets the percentages of every expense
 
   useEffect(() => {
@@ -170,8 +192,9 @@ const Budget = ({ setUser, user }: Props) => {
     const percentages = Object.values(expenseValues).map(
       (value) => (value / totalExpense) * 100
     );
-
     setExpensePercent(percentages);
+
+    // console.log("toimiiko percent", percentages);
   }, [expenseValues, expenses]);
 
   // Change the current balance everytime the income or expenses change
@@ -214,16 +237,21 @@ const Budget = ({ setUser, user }: Props) => {
     newBalance: number,
     expenseType: ExpenseType
   ) => {
-    console.log("hadnelClose expenses ?");
-    setExpensesModalOpen(false);
     if (!isNaN(newBalance)) {
       setExpenses(expenses + newBalance);
+
       setExpenseValues((prev) => ({
         ...prev,
-        [expenseType]: prev[expenseType] + newBalance,
+        [expenseType]: (prev[expenseType] += newBalance),
       }));
     }
+    setExpensesModalOpen(false);
   };
+
+  // console.log("Budget expenseValues", expenseValues);
+  // console.log("EXPENSE ARRAY", expensesArray);
+  // console.log("expenses", expenseValues);
+  // console.log("balancemodal ", balanceModalOpen);
 
   // Return
 
@@ -256,6 +284,9 @@ const Budget = ({ setUser, user }: Props) => {
               setIncomesArray={setIncomesArray}
               expensesArray={expensesArray}
               setExpensesArray={setExpensesArray}
+              setExpenses={setExpenses}
+              expenses={expenses}
+              setExpenseValues={setExpenseValues}
             />
           </div>
         ) : (

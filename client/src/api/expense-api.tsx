@@ -36,7 +36,6 @@ const deleteExpense = async (id: string) => {
     headers: { Authorization: `Bearer ${token}` },
   };
   const res = await axios.delete(`${baseUrl}/${id}`, config);
-  console.log("AXIOS DELETE res", res);
   return res.data;
 };
 

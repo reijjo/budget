@@ -111,14 +111,16 @@ const expenseRouter = new Elysia({ prefix: "/expenses" })
       if (validateUser) {
         const toDelete = await ExpenseModel.findById(id);
 
+        const deletedValue = toDelete?.value;
+
         // Check that the user deletes own expense
         if (
           validateUser.validUser?._id.toString() === toDelete?.user?.toString()
         ) {
-          console.log("jee on sama");
           await ExpenseModel.findByIdAndDelete(id);
-          set.status = 204;
-          return { message: "Item deleted." };
+          set.status = 200;
+
+          return { message: "Item deleted.", value: deletedValue };
         } else {
           set.status = 401;
           return { error: "You can't remove this item." };

@@ -32,6 +32,7 @@
 - forgot password
 - refresh token popup
 - charts loading too fast
+- type for deleting item
 
 - localstorage -> cookies
 - Chart for incomes

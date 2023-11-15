@@ -11,6 +11,7 @@ import {
   // ChartConfiguration,
 } from "chart.js";
 import { ExpenseValues } from "../../utils/types";
+import { useEffect } from "react";
 
 ChartJS.register(
   ArcElement,
@@ -35,6 +36,10 @@ const Donitsi = ({
   income,
   expenses,
 }: Props) => {
+  useEffect(() => {
+    // console.log("expenseValues USEEFFECT", expenseValues);
+  }, [expenses, expenseValues]);
+
   const donitsidata = {
     labels: Object.keys(expenseValues),
     datasets: [
@@ -67,6 +72,8 @@ const Donitsi = ({
       },
     ],
   };
+
+  // console.log("donitsi expenses", expenseValues);
 
   return (
     <div className="donitsi">
