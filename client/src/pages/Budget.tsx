@@ -100,51 +100,52 @@ const Budget = ({ setUser, user }: Props) => {
           const allIncomes = await incomeAPI.getUserIncomes(email);
           const allExpenses = await expenseAPI.getUserExpenses(email);
 
+          console.log("all", allExpenses.totalExpenses);
+
           setIncomesArray(allIncomes.myIncomes);
           setExpensesArray(allExpenses.myExpenses);
 
           // Transform the data to correct format and set the values to matching type
           // Incomes
 
-          if (incomesArray.length > 0) {
-            const updatedIncome = incomesArray.reduce(
-              (acc: IncomeValues, income: IncomeValues) => {
-                acc[income.type] += income.value;
-                return acc;
-              },
-              { ...nullValuesIncome }
-            );
+          const updatedIncome = incomesArray.reduce(
+            (acc: IncomeValues, income: IncomeValues) => {
+              acc[income.type] += income.value;
+              return acc;
+            },
+            { ...nullValuesIncome }
+          );
 
-            // setIncomeValues((prevValues) => {
-            //   return { ...prevValues, ...updatedIncome };
-            // });
-
-            // setIncome(incomesArray[0].total);
-            setIncomeValues(updatedIncome);
+          setIncomeValues(updatedIncome);
+          if (
+            allIncomes &&
+            allIncomes.totalIncomes[0] &&
+            allIncomes.totalIncomes[0].total
+          ) {
             setIncome(allIncomes.totalIncomes[0].total);
           } else {
-            setIncomeValues(incomeValues);
-            setIncome(income);
+            setIncome(0);
           }
 
           // Expenses
+          const updatedExpense = expensesArray.reduce(
+            (acc: ExpenseValues, expense: ExpenseValues) => {
+              acc[expense.type] += expense.value;
+              return acc;
+            },
+            { ...nullValuesExpense }
+          );
 
-          if (expensesArray.length > 0) {
-            const updatedExpense = expensesArray.reduce(
-              (acc: ExpenseValues, expense: ExpenseValues) => {
-                acc[expense.type] += expense.value;
-                return acc;
-              },
-              { ...nullValuesExpense }
-            );
-
-            setExpenseValues(updatedExpense);
+          setExpenseValues(updatedExpense);
+          if (
+            allExpenses &&
+            allExpenses.totalExpenses[0] &&
+            allExpenses.totalExpenses[0].total
+          ) {
             setExpenses(allExpenses.totalExpenses[0].total);
           } else {
-            setExpenseValues(expenseValues);
-            setExpenses(expenses);
+            setExpenses(0);
           }
-          // console.log("expenseVALUES BUDGET", expenseValues);
         }
       } catch (error) {
         console.log("myIncome error", error);

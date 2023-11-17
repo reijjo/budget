@@ -1,5 +1,6 @@
 #landing,
-#try-it-out {
+#try-it-out,
+#forgot {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,6 +79,22 @@
   opacity: 0.9;
 }
 
+.newpw-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(10 * 8.33%);
+  max-width: 800px;
+  border: 1px solid var(--primarylight);
+  font-size: 1.5rem;
+  background-color: var(--bg);
+  opacity: 0.9;
+  height: max-content;
+  margin: 64px;
+  padding-top: 16px;
+}
+
 .login-inputs {
   margin-top: 24px;
   display: flex;
@@ -115,11 +132,16 @@
 }
 
 #form-register,
-#form-login {
+#form-login,
+#form-newpw {
   height: max-content;
   /* display: flex;
   justify-content: center;
   align-items: center; */
+}
+
+#form-newpw {
+  margin: 32px;
 }
 
 ul {

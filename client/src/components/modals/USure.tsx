@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { ExpenseValues, IncomeValues } from "../../utils/types";
+import { ExpenseValues, IncomeValues, WhatType } from "../../utils/types";
 import expenseAPI from "../../api/expense-api";
 import { verifyUser } from "../../utils/middleware";
 import { nullValuesExpense, nullValuesIncome } from "../../utils/valueHelp";
@@ -12,7 +12,8 @@ type sureProps = {
   expensesArray: ExpenseValues[];
   incomesArray: IncomeValues[];
   itemToDelete: IncomeValues | ExpenseValues | null;
-  whatType: string;
+  checkType: WhatType | null;
+  // whatType: string;
 
   setExpenses: Dispatch<SetStateAction<number>>;
   expenses: number;
@@ -26,7 +27,7 @@ type sureProps = {
 const USure = ({
   setYouSure,
   itemToDelete,
-  whatType,
+  checkType,
   setExpensesArray,
   expensesArray,
   setExpenses,
@@ -134,7 +135,9 @@ const USure = ({
             width: "calc(50% - 8px)",
             marginLeft: "8px",
           }}
-          onClick={() => removeItem(String(itemToDelete?.id), whatType)}
+          onClick={() =>
+            removeItem(String(itemToDelete?.id), checkType as WhatType)
+          }
         >
           Delete
         </button>

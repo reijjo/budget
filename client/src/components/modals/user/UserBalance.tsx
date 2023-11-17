@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { ExpenseValues, IncomeValues } from "../../../utils/types";
+import { ExpenseValues, IncomeValues, WhatType } from "../../../utils/types";
 import { parseDate } from "../../../utils/middleware";
 import USure from "../USure";
 
@@ -34,22 +34,19 @@ const UserBalance = ({
   const [itemToDelete, setItemToDelete] = useState<
     IncomeValues | ExpenseValues | null
   >(null);
-  const [whatType, setWhatType] = useState("");
+  const [checkType, setCheckType] = useState<WhatType | null>(null);
 
   const deleteIncome = (income: IncomeValues) => {
     setItemToDelete(income);
-    setWhatType("income");
+    setCheckType(WhatType.Income);
     setYouSure(true);
   };
 
   const deleteExpense = (expense: ExpenseValues) => {
     setItemToDelete(expense);
-    setWhatType("expense");
+    setCheckType(WhatType.Expense);
     setYouSure(true);
   };
-
-  // console.log("youSure??", youSure);
-  // console.log('Balance expenseValues', expenseValues)
 
   // RETURN
 
@@ -61,7 +58,7 @@ const UserBalance = ({
         <USure
           setYouSure={setYouSure}
           itemToDelete={itemToDelete}
-          whatType={whatType}
+          checkType={checkType}
           setExpensesArray={setExpensesArray}
           expensesArray={expensesArray}
           setExpenses={setExpenses}

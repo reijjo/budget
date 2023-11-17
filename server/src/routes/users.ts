@@ -39,20 +39,23 @@ const usersRouter = new Elysia({ prefix: "/users" })
     const user = await UserModel.findOne({ email: email });
     if (user) {
       set.status = 400;
-      return { message: "Email is already in use", style: "info-warning" };
+      return { message: "Email is already in use.", style: "info-warning" };
     }
 
-    // Hash the password
+    // Hash the password & email for verification code
 
     const saltRounds = 10;
     const passwdHash = await bcrypt.hash(passwd, saltRounds);
+    const emailHash = await bcrypt.hash(passwd, saltRounds);
+
+    const verifycode = `${emailHash}${passwdHash}`;
 
     // Add use to database
 
     const newUser = new UserModel({
       email: email,
       passwd: passwdHash,
-      // passwd: passwd,
+      code: verifycode,
     });
 
     try {
@@ -60,10 +63,9 @@ const usersRouter = new Elysia({ prefix: "/users" })
       set.status = 201;
 
       return {
-        message: `You can login with '${savedUser.email}' now!`,
+        message: `You can now login with '${savedUser.email}'`,
         style: "info-success",
       };
-      // return `${savedUser.email} registered!`;
     } catch (error: unknown) {
       set.status = 500;
       return { message: "Error on server side.", style: "info-error" };
@@ -86,6 +88,23 @@ const usersRouter = new Elysia({ prefix: "/users" })
       console.log("error getting ME", error);
       set.status = 500;
       return { message: "Error on server side.", style: "info-error" };
+    }
+  })
+
+  // users/forgot/:code
+  .get("/forgot/:code", async ({ params: { code }, set }) => {
+    try {
+      // Find user with code from address
+      const user = await UserModel.findOne({ code: code });
+      console.log("user with code", user);
+      return { user };
+    } catch (error: unknown) {
+      console.log("error getting ME", error);
+      set.status = 500;
+      return {
+        message: "Error on server side while getting the code.",
+        style: "info-error",
+      };
     }
   });
 

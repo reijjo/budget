@@ -57,6 +57,11 @@ export type RegisterInfo = LoginCredentials & {
   passwd2: string;
 };
 
+export type ChangePw = {
+  passwd: string;
+  passwd2: string;
+};
+
 export type Logged = {
   token: string;
   email: string;
@@ -73,6 +78,8 @@ export type InputFocus = {
   passwd2: boolean;
 };
 
+export type EmailFocus = Omit<InputFocus, "email">;
+
 export type FormErrors = {
   email: {
     len: string | null;
@@ -88,6 +95,8 @@ export type FormErrors = {
     match: string | null;
   };
 };
+
+export type EmailErrors = Omit<FormErrors, "email">;
 
 export type UserData = {
   email: string;

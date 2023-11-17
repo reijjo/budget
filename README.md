@@ -30,7 +30,6 @@
 - email confirmation
 - forgot password
 - refresh token popup
-- userbalance&user WhatType
 - security
 
 - localstorage -> cookies

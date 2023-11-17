@@ -28,10 +28,27 @@ const itsMe = async (email: string) => {
   return res.data;
 };
 
+// users/forgot/:code
+
+const getCode = async (code: string) => {
+  console.log("AXIOS getCode", code);
+  const res = await axios.get(`${baseUrl}/forgot/${code}`);
+  return res.data;
+};
+
+const newPw = async (code: string) => {
+  console.log("AXIOS put new pw", code);
+
+  const res = await axios.put(`${baseUrl}/forgot/${code}`);
+  return res.data;
+};
+
 const userAPI = {
   allUsers,
   createUser,
   itsMe,
+  getCode,
+  newPw,
 };
 
 export default userAPI;
