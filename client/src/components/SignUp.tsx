@@ -239,7 +239,7 @@ const SignUp = ({ status, setSignIn }: Props) => {
             className="my-btn filled-btn"
             style={{ marginTop: "16px" }}
           >
-            Sign up
+            Register
           </button>
         </div>
       </form>

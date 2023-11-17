@@ -17,7 +17,7 @@ const Landing = ({ setUser }: Props) => {
           className="my-btn outline-btn landing-top-button"
           onClick={() => setSignIn(!signIn)}
         >
-          Sign up
+          Register
         </button>
       ) : (
         <button
