@@ -5,13 +5,12 @@ import {
   useState,
   Dispatch,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { isAxiosError } from "axios";
 import { LoginCredentials, Logged, InfoMsg } from "../utils/types";
 import InfoMessage from "./common/InfoMessage";
 import loginAPI from "../api/login-api";
 import { isAxiosError } from "axios";
-import { verifyUser } from "../utils/middleware";
 // import incomeAPI from "../api/income-api";
 
 interface Props {
@@ -39,8 +38,10 @@ const SignIn = ({ status, setSignIn, setUser }: Props) => {
     }));
   };
 
+  const navigate = useNavigate();
+
   const forgotPw = async () => {
-    verifyUser();
+    navigate("/forgot");
   };
 
   // Login

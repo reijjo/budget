@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { Logged } from "./utils/types";
 import Unauthorized from "./pages/Unauthorized";
 import Forgot from "./pages/Forgot";
+import NewPw from "./pages/NewPw";
 
 const MaybeNavbar = ({ user }: { user: Logged | null }) => {
   console.log("user NAVBAR", user);
@@ -62,7 +63,8 @@ const App = () => {
           path="/budget"
           element={<Budget setUser={setUser} user={user} />}
         />
-        <Route path="/forgot/:code" element={<Forgot />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/forgot/:code" element={<NewPw />} />
         <Route path="/fake" element={<Unauthorized />} />
         <Route path="*" element={<Landing setUser={setUser} />} />
       </Routes>

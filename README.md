@@ -27,11 +27,13 @@
 
 - TESTS!
 
+- forgot pages center div
+- make verifycode backend
+- finish forgot frontend
+
 - email confirmation
-- forgot password
 - refresh token popup
 - security
-
 - localstorage -> cookies
 - Chart for incomes
 - more mobile
