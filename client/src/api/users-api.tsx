@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RegisterInfo } from "../utils/types";
+import { ChangePw, RegisterInfo } from "../utils/types";
 
 const baseUrl = "http://localhost:3001/users";
 
@@ -28,18 +28,20 @@ const itsMe = async (email: string) => {
   return res.data;
 };
 
+const changePwLink = async (email: string) => {
+  const res = await axios.post(`${baseUrl}/${email}`);
+  return res.data;
+};
+
 // users/forgot/:code
 
 const getCode = async (code: string) => {
-  console.log("AXIOS getCode", code);
   const res = await axios.get(`${baseUrl}/forgot/${code}`);
   return res.data;
 };
 
-const newPw = async (code: string) => {
-  console.log("AXIOS put new pw", code);
-
-  const res = await axios.put(`${baseUrl}/forgot/${code}`);
+const newPw = async (code: string, passwords: ChangePw) => {
+  const res = await axios.put(`${baseUrl}/forgot/${code}`, passwords);
   return res.data;
 };
 
@@ -47,6 +49,7 @@ const userAPI = {
   allUsers,
   createUser,
   itsMe,
+  changePwLink,
   getCode,
   newPw,
 };

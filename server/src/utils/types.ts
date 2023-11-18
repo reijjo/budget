@@ -17,6 +17,11 @@ export type Logged = {
   email: string;
 };
 
+export type ChangePw = {
+  passwd: string;
+  passwd2: string;
+};
+
 export type Token = {
   id: string;
   email: string;

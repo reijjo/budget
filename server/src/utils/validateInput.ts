@@ -1,5 +1,5 @@
 const emailCheck = (email: string) => {
-  if (!email.match(/^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm)) {
+  if (!email.match(/^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)) {
     return {
       message: "Shady email address.",
       style: "info-error",

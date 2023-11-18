@@ -27,11 +27,9 @@
 
 - TESTS!
 
-- forgot pages center div
-- make verifycode backend
-- finish forgot frontend
-
 - email confirmation
+- change passwd backend
+
 - refresh token popup
 - security
 - localstorage -> cookies

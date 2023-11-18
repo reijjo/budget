@@ -98,6 +98,13 @@ export type FormErrors = {
 
 export type EmailErrors = Omit<FormErrors, "email">;
 
+export type ErrorsEmail = {
+  email: {
+    len: string | null;
+    valid: string | null;
+  };
+};
+
 export type UserData = {
   email: string;
   id: string;

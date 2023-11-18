@@ -1,8 +1,7 @@
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { isAxiosError } from "axios";
-
 import { ChangePw, EmailErrors, EmailFocus, InfoMsg } from "../utils/types";
-
+import Loading from "../components/common/Loading";
 import InfoMessage from "../components/common/InfoMessage";
 import userAPI from "../api/users-api";
 import { useParams } from "react-router-dom";
@@ -31,7 +30,8 @@ const NewPw = () => {
     style: "",
     message: "",
   });
-  // const [code, setCode] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   // Get the code from the address
   const theCode = useParams();
@@ -39,13 +39,36 @@ const NewPw = () => {
   // Fetch user with the code
   useEffect(() => {
     const codeFunc = async (code: string) => {
-      const codeUser = await userAPI.getCode(code);
-      console.log("code user", codeUser);
+      try {
+        const codeUser = await userAPI.getCode(code);
+
+        console.log("codeUSer", codeUser);
+
+        if (codeUser.user !== null) {
+          setUserEmail(codeUser.user.email);
+        } else {
+          setUserEmail("");
+          window.location.replace("/fake");
+        }
+      } catch (error: unknown) {
+        if (isAxiosError(error)) {
+          setInfoMessage({
+            message: error.response?.data.message,
+            style: "info-error",
+          });
+        } else {
+          console.log("shady error", error);
+        }
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
     };
     if (theCode && theCode.code) {
       codeFunc(theCode.code);
     }
-    console.log("CODE", theCode.code);
+    // console.log("CODE", theCode.code);
   }, [theCode]);
 
   const handleNewPasswd = (event: ChangeEvent<HTMLInputElement>) => {
@@ -112,12 +135,20 @@ const NewPw = () => {
     event.preventDefault();
 
     try {
-      const changePw = await userAPI.newPw(String(theCode));
+      const passwords = {
+        passwd: newPw.passwd,
+        passwd2: newPw.passwd2,
+      };
+      const changePw = await userAPI.newPw(String(theCode.code), passwords);
       console.log("Change password api response", changePw);
+      setInfoMessage({
+        message: changePw.message,
+        style: changePw.style,
+      });
 
       console.log("code", theCode);
     } catch (error: unknown) {
-      console.log("error");
+      console.log("error", error);
       if (isAxiosError(error)) {
         setInfoMessage({
           message: error.response?.data.message,
@@ -133,6 +164,10 @@ const NewPw = () => {
   };
 
   // Return
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div id="forgot">
       <button
@@ -151,7 +186,7 @@ const NewPw = () => {
           {/* <p>No worries, change it here.</p> */}
           {/* Form */}
           <div className="newpw-inputs">
-            <p>New password for USER</p>
+            <p>New password for '{userEmail}'</p>
             <form id="form-newpw" onSubmit={changePassword}>
               <div className="login-inputs">
                 {/* Password input */}
@@ -213,6 +248,13 @@ const NewPw = () => {
                   </ul>
                 )}
 
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <InfoMessage
+                    style={infoMessage.style}
+                    message={infoMessage.message}
+                  />
+                </div>
+
                 <button
                   type="submit"
                   className="my-btn filled-btn"
@@ -222,11 +264,6 @@ const NewPw = () => {
                 </button>
               </div>
             </form>
-
-            <InfoMessage
-              style={infoMessage.style}
-              message={infoMessage.message}
-            />
           </div>
         </div>
       </div>

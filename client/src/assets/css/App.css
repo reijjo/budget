@@ -170,6 +170,11 @@ ul {
   color: var(--secondary);
 }
 
+#form-newpw li {
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
 /* Try It Out page */
 
 .balance {
