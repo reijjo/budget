@@ -1,0 +1,17 @@
+@media (max-width: 600px) {
+  .balance {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .donitsi {
+    display: none;
+  }
+}
+
+@media (min-width: 601px) {
+  .bar {
+    display: none;
+  }
+}
