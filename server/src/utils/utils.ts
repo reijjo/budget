@@ -15,11 +15,20 @@ export const mongoConnect = async () => {
   console.log("NODE_ENV", Bun.env.NODE_ENV);
   console.log("MONGODB_URI", Bun.env.MONGODB_URI);
 
+  const theDB =
+    process.env.NODE_ENV === "test"
+      ? process.env.MONGODB_URI
+      : process.env.TEST_MONGODB_URI;
+
   try {
     const ok = await mongoose.connect(
+      // isTest
+      //   ? String(process.env.TEST_MONGODB_URI)
+      //   : String(process.env.MONGODB_URI)
       // isTest ? `${Bun.env.TEST_MONGODB_URI}` : `${Bun.env.MONGODB_URI}`
       // `${Bun.env.MONGODB_URI}`
-      process.env.MONGODB_URI as string
+      // process.env.MONGODB_URI as string
+      String(theDB)
     );
     {
       ok && console.log("...connected to MongoDB!");
