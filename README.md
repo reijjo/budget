@@ -23,6 +23,31 @@
 | **Database**  | MongoDB        |
 | **Other**     | JSON Web Token |
 
+## How to use
+<details>
+  <summary>Install Bun</summary>
+
+  - https://bun.sh/docs/installation
+</details>
+
+<details>
+  <summary>.env</summary>
+
+  - rename server/ENV file to .env
+  - add a mongoDB uri
+  - add a secret (can be anything)
+  - add Outlook credentials
+  - add a port where to run backend
+</details>
+
+<details>
+  <summary>run frontend and backend</summary>
+
+
+  - in the client folder ```bun run dev```
+  - in the server folder ```bun dev```
+</details>
+
 ## TODO
 
 - TESTS! vscode REST client (superapi is a mess with elysiajs)
