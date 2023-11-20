@@ -25,7 +25,7 @@
 
 ## TODO
 
-- TESTS!
+- TESTS! vscode REST client (superapi is a mess with elysiajs)
 
 - email confirmation
 - refresh token popup
