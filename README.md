@@ -35,3 +35,10 @@
 - more mobile/responsive
 - sorting etc
 - Redux for not registered users (maybe)
+
+<details>
+	<summary>testing</summary>
+
+    * hihuu
+
+</details>
