@@ -44,8 +44,8 @@
   <summary>run frontend and backend</summary>
 
 
-  - in the client folder ```bun run dev```
-  - in the server folder ```bun dev```
+  - in the client folder ```bun install``` and then ```bun run dev```
+  - in the server folder ```bun install``` and then ```bun dev```
 </details>
 
 ## TODO
