@@ -2,8 +2,8 @@
   "name": "server",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "test": "NODE_ENV=test bun test --env test"
   },
   "dependencies": {
     "@elysiajs/cors": "^0.7.1",
@@ -16,10 +16,14 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/jest": "^29.5.8",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/mongoose": "^5.11.97",
     "@types/nodemailer": "^6.4.14",
-    "bun-types": "latest"
+    "@types/supertest": "^2.0.16",
+    "bun-types": "latest",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1"
   },
   "module": "src/index.js"
 }

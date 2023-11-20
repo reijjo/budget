@@ -28,12 +28,10 @@
 - TESTS!
 
 - email confirmation
-- change passwd backend
-
 - refresh token popup
 - security
 - localstorage -> cookies
 - Chart for incomes
-- more mobile
+- more mobile/responsive
 - sorting etc
 - Redux for not registered users (maybe)

@@ -6,7 +6,6 @@ import { mongoConnect } from "./utils/utils";
 import { loginRouter } from "./routes/login";
 import { incomeRouter } from "./routes/incomes";
 import { expenseRouter } from "./routes/expenses";
-import { origin } from "bun";
 
 const app = new Elysia();
 app.use(
@@ -29,6 +28,8 @@ mongoConnect();
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
+
+export { app };
 
 process.on("SIGINT", async () => {
   await mongoose.disconnect();
