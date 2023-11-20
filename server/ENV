@@ -1,0 +1,13 @@
+# MongoDB
+MONGODB_URI=
+
+
+# JSON Web Token
+SECRET=
+
+# Outlook credentials for verify email
+EMAIL_USERNAME=
+EMAIL_PASSWORD=
+
+# Server
+PORT=
